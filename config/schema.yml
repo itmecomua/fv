@@ -1,0 +1,418 @@
+entities:
+  User:
+   table_name: %database.db_prefix%users
+   primary_key: id
+   fields:
+     group_id: {value: 0, changed: false, type: int}
+     login: {value: , changed: false, type: string, validate: true, invalid_string: Логин должен быть уникальным содержать не менее 4-х символов и состоять из цифр букв и знака "_"}
+     password: {value: , changed: false, type: string, pre_func: md5, validate: true, invalid_string: Пароль должен быть более 4-х символов}
+     email: {value: , changed: false, type: string, validate: true, invalid_string: Введите пожалуйста валидный адрес электронной почты}
+     create_date: {value: , changed: false, type: date, auto_set: Insert, auto_value: now()}
+     update_date: {value: , changed: false, type: date, auto_set: Update, auto_value: now()}
+     full_name: {value: , changed: false, type: string}
+     info: {value: , changed: false, type: string}
+     active: {value: false, changed: false, type: bool}
+     permitions: {value: , changed: false, type: array}
+     is_root: {value: false, changed: false, type: bool}
+     inherit: {value: false, changed: false, type: bool}
+
+  UserGroup:
+    table_name: %database.db_prefix%user_groups
+    primary_key: id
+    fields:
+      group_name: {value: , changed: false, type: string, validate: true, invalid_string: Имя должно быть не пустым}
+      info: {value: , changed: false, type: string}
+      permitions: {value: , changed: false, type: array}
+      default_group: {value: false, changed: false, type: bool}
+      last_update: {value: , changed: false, type: date, auto_set: Any, auto_value: now()}
+
+  Page:
+    table_name: %database.db_prefix%pages
+    primary_key: id
+    fields:
+      page_parent_id: {value: 0, changed: false, type: int}
+      page_name: {value: , changed: false, type: string, validate: true, invalid_string: Имя должно быть не пустым и не должно равняться 'default'}
+      page_url: {value: , changed: false, type: string, validate: true, invalid_string: URL должен быть не пустым}
+      page_title: {value: , changed: false, type: string}
+      page_description: {value: , changed: false, type: string}
+      page_keywords: {value: , changed: false, type: string}
+      page_content: {value: , changed: false, type: string}
+      js: {value: , changed: false, type: string}
+      css: {value: , changed: false, type: string}
+      meta_id: {value: , changed: false, type: string}
+      image: {value: , changed: false, type: string}
+      
+  Meta:
+    table_name: %database.db_prefix%meta
+    primary_key: id
+    fields:      
+      title: {value: , changed: false, type: string, validate: true}
+      description: {value: , changed: false, type: string, validate: true, field: textarea}
+      keywords: {value: , changed: false, type: string, validate: true, field: textarea}
+      ctime: {value: , changed: false, type: date, auto_set: Insert, auto_value: now()}
+
+  StaticPages:
+    table_name: %database.db_prefix%static_pages
+    primary_key: id
+    fields:
+      tech_url: {value: , changed: false, type: string, validate: true, invalid_string: URL не должен быть пустым}
+      name: {value: , changed: false, type: string, validate: true, invalid_string: Имя должно быть не пустым, field: input}
+      title: {value: , changed: false, type: string, validate: true, invalid_string: Заголовок должен быть не пустым, field: input}
+      content: {value: , changed: false, type: string, field: redactor}
+      is_system: {value: false, changed: false, type: bool}
+      show_title: {value: true, changed: false, type: bool}
+
+
+  Log:
+    table_name: %database.db_prefix%log
+    primary_key: id
+    fields:
+      operation: {value: , changed: false, type: string}
+      object_type: {value: , changed: false, type: string}
+      object_name: {value: , changed: false, type: string}
+      object_id: {value: 0, changed: false, type: int}
+      edit_link: {value: , changed: false, type: string}
+      manager_id: {value: 0, changed: false, type: int}
+      date: {value: , changed: false, type: date, auto_set: Insert, auto_value: now()}   
+      message: {value: , changed: false, type: string}                                      
+
+  Menu:
+    table_name: %database.db_prefix%menu
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}      
+      type_id: {value: , changed: false, type: int, validate: false}      
+      url: {value: , changed: false, type: string, validate: true}      
+      is_target: {value: , changed: false, type: bool, validate: false}      
+      is_non_active: {value: , changed: false, type: bool, validate: false}      
+      weight: {value: , changed: false, type: int, validate: false}      
+      parent_id: {value: , changed: false, type: int, validate: false}      
+      message: {value: , changed: false, type: string}       
+      is_show: {value: , changed: false, type: int, validate: false}   
+      
+  Dictionary:
+    table_name: %database.db_prefix%dictionary
+    primary_key: id
+    
+  Country:
+    table_name: %database.db_prefix%country
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}        
+      is_show: {value: , changed: false, type: int, validate: false} 
+      is_show_promo: {value: , changed: false, type: int, validate: false} 
+      url: {value: , changed: false, type: string, validate: true}
+      short_text: {value: , changed: false, type: string, validate: false}
+      full_text: {value: , changed: false, type: string, validate: false}
+      documents: {value: , changed: false, type: string, validate: false}
+      cnt_view: {value: , changed: false, type: int, validate: false}            
+      
+  Resort:
+    table_name: %database.db_prefix%resort
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      country_id: {value: , changed: false, type: int}
+      weight: {value: , changed: false, type: int, validate: false}
+      url: {value: , changed: false, type: string, validate: true}
+      short_text: {value: , changed: false, type: string, validate: false}
+      full_text: {value: , changed: false, type: string, validate: false}
+      
+  Hotel:
+    table_name: %database.db_prefix%hotel
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      name_transcription: {value: , changed: false, type: string, validate: true}
+      url: {value: , changed: false, type: string, validate: true}
+      country_id: {value: , changed: false, type: int, validate: true}      
+      resort_id: {value: , changed: false, type: int, validate: true}      
+      hotel_type_id: {value: , changed: false, type: int, validate: true}      
+      weight: {value: , changed: false, type: int, validate: false}      
+      cnt_view: {value: , changed: false, type: int, validate: false}            
+      short_text: {value: , changed: false, type: string, validate: false}
+      full_text: {value: , changed: false, type: string, validate: false}
+      
+  TourType:
+    table_name: %database.db_prefix%tour_type
+    primary_key: id
+    fields:
+      name:         {value: , changed: false, type: string, validate: true}
+      weight:       {value: , changed: false, type: int,    validate: false}      
+      is_show:      {value: , changed: false, type: int,    validate: false} 
+      url:          {value: , changed: false, type: string, validate: true}    
+      short_text:   {value: , changed: false, type: string, validate: false}
+      
+  HotelType:
+    table_name: %database.db_prefix%hotel_type
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}  
+
+  Tabs:
+    table_name: %database.db_prefix%tabs
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}  
+      
+  Resort:
+    table_name: %database.db_prefix%resort
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: true}
+      country_id: {value: , changed: false, type: int}
+      weight: {value: , changed: false, type: int, validate: false}      
+      is_show: {value: , changed: false, type: int, validate: false}   
+      
+  CountryMedia:
+    table_name: %database.db_prefix%country_media
+    primary_key: id
+    fields:      
+      country_id: {value: , changed: false, type: int, validate: false}
+      name: {value:, changed: false, type: string, validate: false}      
+      image: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}      
+      is_main: {value: , changed: false, type: int, validate: false}   
+      type_id: {value: , changed: false, type: int, validate: false}
+      ctime: {value: , changed: false, type: string, validate: true} 
+      
+  TourMedia:
+    table_name: %database.db_prefix%tour_media
+    primary_key: id
+    fields:      
+      tour_id: {value: , changed: false, type: int, validate: false}
+      name: {value:, changed: false, type: string, validate: false}      
+      image: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}      
+      is_main: {value: , changed: false, type: int, validate: false}         
+      ctime: {value: , changed: false, type: string, validate: true}               
+      
+  HotelMedia:
+    table_name: %database.db_prefix%hotel_media
+    primary_key: id
+    fields:      
+      hotel_id: {value: , changed: false, type: int, validate: false}
+      name: {value:, changed: false, type: string, validate: false}      
+      image: {value: , changed: false, type: string, validate: true}
+      weight: {value: , changed: false, type: int, validate: false}      
+      is_main: {value: , changed: false, type: int, validate: false}   
+      type_id: {value: , changed: false, type: int, validate: false}
+
+  Subscribe:
+    table_name: %database.db_prefix%subscribe
+    primary_key: id
+    fields:      
+      email: {value: , changed: false, type: string, validate: true}
+      phone: {value:, changed: false, type: string, validate: true}      
+      country: {value: , changed: false, type: string, validate: true}
+      company: {value: , changed: false, type: string, validate: true}
+      post: {value: , changed: false, type: string, validate: true}
+      ctime:  {value: , changed: false, type: date, auto_set: Insert, auto_value: now()}
+      name: {value: , changed: false, type: string, validate: true}
+      is_active: {value: , changed: false, type: int, validate: true}
+
+  Tour:
+    table_name: %database.db_prefix%tour
+    primary_key: id
+    fields:      
+      name: {value: , changed: false, type: string, validate: true}
+      url: {value:, changed: false, type: string, validate: true}      
+      duration: {value:, changed: false, type: int, validate: false}      
+      price_from: {value:, changed: false, type: int, validate: false}      
+      currency: {value:, changed: false, type: string, validate: false}      
+      short_text: {value:, changed: false, type: string, validate: false}      
+      full_text: {value:, changed: false, type: string, validate: false}      
+      weight: {value:, changed: false, type: int, validate: false}      
+      is_show: {value:, changed: false, type: int, validate: false}      
+      cnt_view: {value:, changed: false, type: int, validate: false}
+      import_id: {value:, changed: false, type: int, validate: false}
+      import_url: {value:, changed: false, type: string, validate: false}
+      
+  Tour2Country:
+    table_name: %database.db_prefix%tour2country
+    primary_key: id
+    fields:      
+      tour_id: {value:, changed: false, type: int, validate: false}
+      country_id: {value:, changed: false, type: int, validate: false}
+      
+  Tour2Type:
+    table_name: %database.db_prefix%tour2type
+    primary_key: id
+    fields:      
+      tour_id: {value:, changed: false, type: int, validate: false}
+      type_id: {value:, changed: false, type: int, validate: false}
+      
+  Tour2Date:
+    table_name: %database.db_prefix%tour2date
+    primary_key: id
+    fields:      
+      tour_id: {value:, changed: false, type: int, validate: false}
+      date_start: {value:, changed: false, type: date, validate: false}     
+	  
+  Advertise:                     
+    table_name: %database.db_prefix%advertise
+    primary_key: id
+    fields:
+      text: {value: , changed: false, type: string, validate: true}
+      image: {value: , changed: false, type: string,  validate: false}       
+      url: {value: , changed: false, type: string,  validate: true}
+      name: {value: , changed: false, type: string,  validate: true}
+      type_id: {value: , changed: false, type: int,  validate: false}       
+      is_show: {value: , changed: false, type: int,  validate: false} 
+      target_blank: {value: , changed: false, type: int,  validate: false} 
+      weight: {value: , changed: false, type: int,  validate: false}   
+
+  Icon:  
+    table_name: %database.db_prefix%icon
+    primary_key: id
+    fields:      
+      image: {value: , changed: false, type: string,  validate: false}       
+      url: {value: , changed: false, type: string,  validate: false}       
+      name: {value: , changed: false, type: string,  validate: true}       
+      is_target: {value: , changed: false, type: int,  validate: false}       
+      is_show: {value: , changed: false, type: int,  validate: false} 
+      weight: {value: , changed: false, type: int,  validate: false}   
+      
+<?php /*новости*/ ?>        
+  News:
+    table_name: %database.db_prefix%news
+    primary_key: id
+    fields:
+      image:        {value: , changed: false, type: string,  validate: true}       
+      name:         {value: , changed: false, type: string, validate: true}
+      url:          {value: , changed: false, type: string, validate: true}
+      meta_id:      {value: , changed: false, type: int, validate: true}
+      heading:      {value: , changed: false, type: string, validate: true}
+      text:         {value: , changed: false, type: string, validate: true}
+      create_time:  {value: , changed: false, type: date, auto_set: Insert, auto_value: now()}
+      shows:        {value: , changed: false, type: int, validate: false}
+      is_promo:     {value: , changed: false, type: bool}
+      weight:       {value: , changed: false, type: int}                  
+      is_active:    {value: , changed: false, type: bool}    
+      
+  ForecastCity:
+    table_name: %database.db_prefix%forecast_city
+    primary_key: city_id
+    fields:
+      city_name: {value: , changed: false, type: string, validate: true}
+            
+  HotOffer:  
+    table_name: %database.db_prefix%hot_offer
+    primary_key: id
+    fields:      
+      image:        {value: , changed: false, type: string,  validate: true}       
+      url:          {value: , changed: false, type: string,  validate: true}       
+      name:         {value: , changed: false, type: string,  validate: true}       
+      short_text:   {value: , changed: false, type: string,  validate: true}       
+      is_target:    {value: , changed: false, type: int,     validate: false}       
+      is_show:      {value: , changed: false, type: int,     validate: false} 
+      weight:       {value: , changed: false, type: int,     validate: false}         
+      
+  Order:  
+    table_name: %database.db_prefix%order
+    primary_key: id
+    fields:      
+      email: {value: , changed: false, type: string,  validate: true}       
+      name: {value: , changed: false, type: string,  validate: true}       
+      phone: {value: , changed: false, type: string,  validate: true}       
+      country: {value: , changed: false, type: string,  validate: true}       
+      city: {value: , changed: false, type: string,  validate: true}       
+      cnt_adult: {value: , changed: false, type: int,  validate: true}       
+      cnt_child: {value: , changed: false, type: int,  validate: true}       
+      budget: {value: , changed: false, type: string,  validate: true}       
+      duration: {value: , changed: false, type: string,  validate: true}       
+      date_fr: {value: , changed: false, type: date,  validate: true}       
+      date_to: {value: , changed: false, type: date,  validate: true}       
+      hotel_type_3: {value: , changed: false, type: bool,  validate: true}       
+      hotel_type_4: {value: , changed: false, type: bool,  validate: true}       
+      hotel_type_5: {value: , changed: false, type: bool,  validate: true}       
+      meal_breakfast: {value: , changed: false, type: bool,  validate: true}       
+      meal_pansion: {value: , changed: false, type: bool,  validate: true}       
+      meal_half_pansion: {value: , changed: false, type: bool,  validate: true}       
+      meal_ai: {value: , changed: false, type: bool,  validate: true}       
+      wish_text: {value: , changed: false, type: string,  validate: true}       
+      state: {value: , changed: false, type: int,  validate: true}       
+      ctime: {value: , changed: false, type: datetime, auto_set: Insert, auto_value: now()}
+	  
+  OrderTour:  
+    table_name: %database.db_prefix%ordertour
+    primary_key: id
+    fields:      
+      tour_name: {value: , changed: false, type: string,  validate: true}       
+      date_tour: {value: , changed: false, type: date,  validate: true}             
+      cnt_adult: {value: , changed: false, type: int,  validate: true}             
+      name: {value: , changed: false, type: string,  validate: true}       
+      email: {value: , changed: false, type: string,  validate: true}       
+      phone: {value: , changed: false, type: string,  validate: true}       
+      wish_text: {value: , changed: false, type: string,  validate: true}       
+      state: {value: , changed: false, type: int,  validate: true}       
+      ctime: {value: , changed: false, type: datetime, auto_set: Insert, auto_value: now()}	  
+
+  CodeDictionary:
+    table_name: %database.db_prefix%code_dictionary
+    primary_key: id
+    fields:
+      name: {value: , changed: false, type: string, validate: false, filter: true}
+      code: {value: , changed: false, type: string, validate: true}      
+      position_id: {value: , changed: false, type: int, validate: false}      
+      is_active: {value: , changed: false, type: bool, validate: false}
+      techname: {value: , changed: false, type: string, validate: false}
+	  
+  PriceOfDay:  
+    table_name: %database.db_prefix%priceofday
+    primary_key: id
+    fields:      
+      discount:     {value: , changed: false, type: int,    validate: true}
+      name:         {value: , changed: false, type: string, validate: true}
+      short_text:   {value: , changed: false, type: string, validate: true}
+      priceold:     {value: , changed: false, type: string, validate: true}
+      pricenew:     {value: , changed: false, type: string, validate: true}
+      image:        {value: , changed: false, type: string, validate: true}
+      url:          {value: , changed: false, type: string, validate: true}
+      is_target:    {value: , changed: false, type: int,    validate: false}
+      is_show:      {value: , changed: false, type: int,    validate: false}
+      weight:       {value: , changed: false, type: int,    validate: false}
+	  
+  Recommend:  
+    table_name: %database.db_prefix%recommend
+    primary_key: id
+    fields:      
+      name:         {value: , changed: false, type: string,  validate: true}       
+      image:        {value: , changed: false, type: string,  validate: true}
+      stars:        {value: , changed: false, type: int,     validate: false}       
+      short_text:   {value: , changed: false, type: string,  validate: true}       
+      duration:     {value: , changed: false, type: string,  validate: true}       
+      price:        {value: , changed: false, type: string,  validate: true}       
+      url:          {value: , changed: false, type: string,  validate: true}       
+      is_target:    {value: , changed: false, type: int,     validate: false}       
+      is_show:      {value: , changed: false, type: int,     validate: false} 
+      weight:       {value: , changed: false, type: int,     validate: false}         
+	  
+  Mix:  
+    table_name: %database.db_prefix%mix
+    primary_key: id
+    fields:      
+      name:         {value: , changed: false, type: string,  validate: true}       
+      image:        {value: , changed: false, type: string,  validate: true}
+      stars:        {value: , changed: false, type: int,     validate: false}       
+      short_text:   {value: , changed: false, type: string,  validate: true}       
+      duration:     {value: , changed: false, type: string,  validate: true}       
+      price:        {value: , changed: false, type: string,  validate: true}       
+      url:          {value: , changed: false, type: string,  validate: true}       
+      is_target:    {value: , changed: false, type: int,     validate: false}       
+      is_show:      {value: , changed: false, type: int,     validate: false} 
+      weight:       {value: , changed: false, type: int,     validate: false}         
+	  
+  Contacts:  
+    table_name: %database.db_prefix%contacts
+    primary_key: id
+    fields:      
+      phonetitle:     {value: , changed: false, type: string,  validate: false}       
+      phone:        	{value: , changed: false, type: string,  validate: false}
+      addresstitle:  {value: , changed: false, type: string,  validate: false}       
+      address:        {value: , changed: false, type: string,  validate: false}
+      is_show:      {value: , changed: false, type: int,     validate: false} 
+	  

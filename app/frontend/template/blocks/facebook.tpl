@@ -1,0 +1,3 @@
+<div class="soc_facebook">
+<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2F%25D0%2597%25D0%25BE%25D0%25BB%25D0%25BE%25D1%2582%25D0%25BE%25D0%25B9-%25D0%259A%25D0%25BE%25D0%25BC%25D0%25BF%25D0%25B0%25D1%2581%2F261407277286686&amp;width=320&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:320px; height:258px;" allowTransparency="true"></iframe>
+</div>

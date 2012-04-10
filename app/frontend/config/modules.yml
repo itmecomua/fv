@@ -1,0 +1,286 @@
+modules:
+  staticpages:
+    path: %path.modules%staticpages/
+    action_class: StaticPagesAction
+    module_class: StaticPagesModule
+    name: Статические страницы
+    shows: {full: Полный список/одна страница, short: Короткий список - заголовки, one: Одна страница по имени}
+    params:
+      full:
+          count: {name: Количество на странице, default: 10}
+      short:
+          count_short: {name: Количество в коротком виде, default: 2}
+          count_long: {name: Количество в длинном виде, default: 5}
+      one:
+        tech_name: {name: Имя страницы, default: ~}
+    access:
+      enable: false
+    smarty:
+      template: %modules.staticpages.path%template/
+      compile: %path.smarty.compile%
+  
+  index:
+    path: %path.modules%index/
+    action_class: IndexAction
+    module_class: IndexModule
+    name: Главная страница
+    shows: {index: Главная страница, header: Заголовок}
+    access:
+      enable: false
+    smarty:
+      template: %modules.index.path%template/
+      compile: %path.smarty.compile%
+      
+  countries:
+    path: %path.modules%countries/
+    action_class: CountriesAction
+    module_class: CountriesModule
+    name: Cтраны
+    shows: {index: Главная страница}
+    pager:
+      show_per_page: 16
+    access:
+      enable: false
+    smarty:
+      template: %modules.countries.path%template/
+      compile: %path.smarty.compile%
+  
+  menu:
+    path: %path.modules%menu/
+    action_class: MenuAction
+    module_class: MenuModule
+    shows: {index: Меню}
+    name: Меню
+    access:
+      enable: false
+    smarty:
+      template: %modules.menu.path%template/
+      compile: %path.smarty.compile%  
+
+  tabs:
+    path: %path.modules%tabs/
+    action_class: TabsAction
+    module_class: TabsModule
+    shows: {index: Табсы}
+    name: Табсы
+    access:
+      enable: false
+    smarty:
+      template: %modules.tabs.path%template/
+      compile: %path.smarty.compile%  
+      
+  subscribe:
+    path: %path.modules%subscribe/
+    action_class: SubscribeAction
+    module_class: SubscribeModule
+    shows: {index: подписаться/отписаться}
+    name: Подписка
+    access:
+      enable: false
+    smarty:
+      template: %modules.subscribe.path%template/
+      compile: %path.smarty.compile%  
+ 
+  advertise:
+    path: %path.modules%advertise/
+    action_class: AdvertiseAction
+    module_class: AdvertiseModule
+    name: Центральный рекламный блок    
+    shows: {crb: Центр}    
+    access:
+      enable: false
+    smarty:
+      template: %modules.advertise.path%template/
+      compile: %path.smarty.compile%       
+
+  icon:
+    path: %path.modules%icon/
+    action_class: IconAction
+    module_class: IconModule
+    name: Иконки-сервисы
+    shows: {Index: основное отображение}     
+    access:
+      enable: false
+    smarty:
+      template: %modules.icon.path%template/
+      compile: %path.smarty.compile%           
+
+  tours:
+    path: %path.modules%tours/
+    action_class: ToursAction
+    module_class: ToursModule
+    name: Туры
+    access:
+      enable: false
+    pager:
+      show_per_page: 10         
+    smarty:
+      template: %modules.tours.path%template/
+      compile: %path.smarty.compile%           
+
+  hotels:
+    path: %path.modules%hotels/
+    action_class: HotelsAction
+    module_class: HotelsModule
+    name: Отели
+    access:
+      enable: false
+    pager:
+      show_per_page: 10         
+    smarty:
+      template: %modules.hotels.path%template/
+      compile: %path.smarty.compile%                 
+            
+<?php /*Модуль новостей*/ ?>      
+  news:
+    path: %path.modules%news/
+    action_class: NewsAction
+    module_class: NewsModule
+    name: Новости
+    shows: {Index: основное отображение, Latest: Последние 5 промо новостей}     
+    access:           
+      enable: false
+    pager:
+      show_per_page: 5
+    smarty:
+      template: %modules.news.path%template/
+      compile: %path.smarty.compile%   
+<?php /*
+  tabs:
+    path: %path.modules%tabs/
+    action_class: TabsAction
+    module_class: TabsModule
+    name: Новости
+    shows: {Index: основное отображение, Latest: Последние 5 промо новостей}
+    access:
+      enable: false
+    pager:
+      show_per_page: 5
+    smarty:
+      template: %modules.tabs.path%template/
+      compile: %path.smarty.compile% */
+?>
+	  
+  meteo: 
+    path: %path.modules%meteo/
+    action_class: MeteoAction
+    module_class: MeteoModule
+    name: Погода
+    pager:
+      show_per_page: 10; 
+    shows: {Panel: панель}     
+    access: 
+      enable: false
+    smarty:
+      template: %modules.meteo.path%template/
+      compile: %path.smarty.compile%       
+  
+  hotoffer:
+    path: %path.modules%hotoffer/
+    action_class: HotOfferAction
+    module_class: HotOfferModule
+    name: Горящие предложения
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.hotoffer.path%template/
+      compile: %path.smarty.compile%         
+      
+  order:
+    path: %path.modules%order/
+    action_class: OrderAction
+    module_class: OrderModule
+    name: Заказ
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.order.path%template/
+      compile: %path.smarty.compile%      
+
+  ordertour:
+    path: %path.modules%ordertour/
+    action_class: OrderTourAction
+    module_class: OrderTourModule
+    name: Заказ тура
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.ordertour.path%template/
+      compile: %path.smarty.compile%      	  
+	  
+  codedictionary:
+    path: %path.modules%codedictionary/
+    action_class: CodeDictionaryAction
+    module_class: CodeDictionaryModule
+    name: Сторонние коды
+    shows: {zone1: зона1 , zone2: зона2, ittour: ItTour , ittourscript: ItTourScript} 
+    access:           
+      enable: false
+    smarty:
+      template: %modules.codedictionary.path%template/
+      compile: %path.smarty.compile%
+      
+  priceofday:
+    path: %path.modules%priceofday/
+    action_class: PriceOfDayAction
+    module_class: PriceOfDayModule
+    name: Цена дня
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.priceofday.path%template/
+      compile: %path.smarty.compile%         
+
+  recommend:
+    path: %path.modules%recommend/
+    action_class: RecommendAction
+    module_class: RecommendModule
+    name: Мы рекомендуем
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.recommend.path%template/
+      compile: %path.smarty.compile% 
+	  
+  mix:
+    path: %path.modules%mix/
+    action_class: MixAction
+    module_class: MixModule
+    name: Сезонный микс
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.mix.path%template/
+      compile: %path.smarty.compile% 	  
+
+  contacts:
+    path: %path.modules%contacts/
+    action_class: ContactsAction
+    module_class: ContactsModule
+    name: Контакты
+    shows: {Index: основное отображение} 
+    access:           
+      enable: false
+    pager:
+      show_per_page: 12
+    smarty:
+      template: %modules.contacts.path%template/
+      compile: %path.smarty.compile% 	  	  

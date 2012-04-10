@@ -1,0 +1,1 @@
+<?php// Закоментировать в продакшн режимеdefined('YII_DEBUG') 		or define('YII_DEBUG',true);defined('YII_TRACE_LEVEL') 	or define('YII_TRACE_LEVEL',3);return array(    'classMap' => require_once('classmap.php'),	'aliases' => require_once('aliases.php'),	'includePaths' => require_once('includePaths.php'),);

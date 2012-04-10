@@ -1,0 +1,11 @@
+template:
+  name: main.tpl
+  default_content_part: page_content
+  content_parts:
+    head: Заголовок сайта
+    main_menu: Главное меню сайта
+    page_content: Основной контент сайта
+    footer: Подвал сайта
+    leftcol: Левая колонка
+    closestbody: Закрывающий боди 
+    

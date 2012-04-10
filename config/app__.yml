@@ -1,0 +1,177 @@
+<?php
+
+    define("FV_ROOT", realpath(dirname(__FILE__) . "/../"));
+    define("CURRENT_LANGUAGE", "ru");
+    $srv = $_SERVER['SERVER_NAME'];
+
+    if(preg_match('/mytravel.nn.ru/',$srv))  //local version     
+    {
+        $__server_host = 'mytravel.nn.ru';
+        $__db_server_host = '127.0.0.1';
+        $__db_server_user = 'mytravel';
+        $__db_server_pass = 'mytravel';
+
+/*
+        $__server_host = 'mytravel.nn.ua';
+        $__db_server_host = 'mysql.h4.newname.com.ua';
+        $__db_server_user = 'mytravelnn';
+        $__db_server_pass = 'V8NiB27x';
+*/
+    }
+    else
+    {
+        $__server_host = 'mytravel.nn.ua';
+        $__db_server_host = 'mysql.h4.newname.com.ua';
+        $__db_server_user = 'mytravelnn';
+        $__db_server_pass = 'V8NiB27x';
+    }
+    
+    define("__SERVER_NAME", $__server_host);
+    define("__DB_SERVER_NAME", $__db_server_host);
+    define("__DB_SERVER_USER", $__db_server_user);
+    define("__DB_SERVER_PASS", $__db_server_pass);
+
+?>
+
+server_name: %__SERVER_NAME%
+site_name: mytravel.nn.ua
+dir_root: %FV_ROOT%
+tech_web_root: %FV_ROOT%web/
+dir_web_root: /
+cdn_root: http://img.%server_name%/
+cdn_enable: false
+charset: utf-8
+language: %CURRENT_LANGUAGE%
+
+
+database:
+ dsn: mysql://%__DB_SERVER_USER%:%__DB_SERVER_PASS%@%__DB_SERVER_NAME%/mytravelnn
+ driver: mysql
+ host: %__DB_SERVER_NAME%
+ user: mytravelnn
+ pass: V8NiB27x
+ name: mytravelnn
+ db_prefix: mytravelnn.travel_
+
+ftp:
+ server_name: %server_name%
+ user: mytravelnn
+ pass: rZJkcR9P
+
+session:
+ use_database: true
+ sess_name: fv_session
+ life_time: 10000
+ table: %database.db_prefix%session
+
+filters: [fvActionFilter]
+
+path:
+ font: %tech_web_root%font/
+ classes: %dir_root%classes/
+ announce_url: http://%server_name%:2512/
+ error: %dir_root%error/error.log 
+ db: %path.classes%DB/
+ entity: %path.classes%entity/
+ filters: %path.classes%filter/
+ interfaces: %path.classes%interface/
+ exceptions: %path.classes%exceptions/
+ includes: %dir_root%includes/
+ config: %dir_root%config/
+ app: %dir_root%app/
+ css: %dir_web_root%css/
+ js: %dir_web_root%js/
+ cache: %dir_root%xcache/
+ media_web: %dir_web_root%upload/media/
+ web_captcha_root: %dir_web_root%captcha/
+ tech_captcha_root: %tech_web_root%captcha/
+ smarty:
+  class_path: %dir_root%smarty/
+ upload:
+  media: %tech_web_root%upload/media/
+  media_web: %dir_web_root%upload/media/
+  temp_image: %tech_web_root%upload/tmp/
+  web_temp_image: %dir_web_root%upload/tmp/
+  advertise: %tech_web_root%upload/advertise/
+  advertise_web: %dir_web_root%upload/advertise/
+  mediacountry_web: %dir_web_root%upload/country/
+  mediacountry: %tech_web_root%upload/country/
+  mediahotel_web: %dir_web_root%upload/hotel/
+  mediahotel: %tech_web_root%upload/hotel/
+  icon_web: %dir_web_root%upload/icon/
+  icon: %tech_web_root%upload/icon/
+  mediatour: %tech_web_root%upload/tour/   
+  mediatour_web: %dir_web_root%upload/tour/   
+  HotOffer: %tech_web_root%upload/HotOffer/   
+  HotOffer_web: %dir_web_root%upload/HotOffer/   
+  
+ application:
+  backend:
+   root: %path.app%backend/
+   web_root: %dir_web_root%backend/
+   config: %path.application.backend.root%config/
+   classes: %path.application.backend.root%classes/
+  frontend:
+   root: %path.app%frontend/
+   web_root: %dir_web_root%
+   config: %path.application.frontend.root%config/
+   classes: %path.application.frontend.root%classes/ 
+     
+editor:
+  basepath: %dir_web_root%fckeditor/
+  toolbar: fv
+  config: %path.js%fvfckconfig.js
+  className:
+  style: width: 95%; margin: 2px 0px 10px 10px; border:solid 1px #aacfe4;
+
+cache:
+  cachetime: 60
+
+email:
+  from_name: Администратор
+  from_email: deserett@gmail.com
+  administrator: alex@newname.com.ua
+  bcc: alex@newname.com.ua
+  error_email: alex@newname.com.ua
+  feedback: [deserett@gmail.com , newname.com.ua@gmail.com]
+  
+images:
+  default_type: normal
+  crbcenter:
+    width: 691
+    height: 254
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  crbright:
+    width: 333
+    height: 163
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  crbleft:
+    width: 323
+    height: 163
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  large:
+    width: 500
+    height: 500
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  normal:
+    width: 300
+    height: 300
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  small:
+    width: 200
+    height: 200
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  smalltwo:
+    width: 135
+    height: 100
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  smallone:
+    width: 124
+    height: 71
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+  thumb:
+    width: 100
+    height: 100
+    type: <?php echo fvMediaLib::THUMB_WIDTH . "\n" ?>
+pager:
+  show_per_page: 8;

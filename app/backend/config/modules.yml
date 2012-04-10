@@ -1,0 +1,407 @@
+modules:
+  index:
+    path: %path.modules%index/
+    menu_path: ~
+    action_class: IndexAction
+    module_class: IndexModule
+    name: Главная страница
+    smarty:
+      template: %modules.index.path%template/
+      compile: %path.smarty.compile%
+  usergroups:
+    path: %path.modules%usergroups/
+    menu_path: Администрирование/Группы пользователей
+    action_class: UserGroupsAction
+    module_class: UserGroupsModule
+    icon: package.png
+    name: Группы пользователей
+    access:
+      enable: true
+      acl: [alc_user_groups]
+    smarty:
+      template: %modules.usergroups.path%template/
+      compile: %path.smarty.compile%
+  users:
+    path: %path.modules%users/
+    menu_path: Администрирование/Пользователи
+    action_class: UsersAction
+    module_class: UsersModule
+    name: Пользователи
+    icon: vcard.png
+    access:
+      enable: true
+      acl:
+        index: [acl_user_show, acl_user_edit]
+        edit: [acl_user_edit]
+        delete: [acl_user_edit]
+        save: [acl_user_edit]
+    smarty:
+      template: %modules.users.path%template/
+      compile: %path.smarty.compile%
+  pages:
+    path: %path.modules%pages/
+    menu_path: Содержание/Управление страницами
+    action_class: PagesAction
+    module_class: PagesModule
+    icon: page_code.png
+    name: Управление страницами
+    params:
+      app: frontend
+    access:
+      enable: true
+      acl: [acl_pages]
+    smarty:
+      template: %modules.pages.path%template/
+      compile: %path.smarty.compile%
+  login:
+    path: %path.modules%login/
+    menu_path: ~
+    action_class: LoginAction
+    module_class: LoginModule
+    name: вход в систему
+    smarty:
+      template: %modules.login.path%template/
+      compile: %path.smarty.compile%
+  menu:
+    path: %path.modules%menu/
+    menu_path: ~
+    action_class: MenuAction
+    module_class: MenuModule
+    name: Главное меню
+    smarty:
+      template: %modules.menu.path%template/
+      compile: %path.smarty.compile%
+      
+  staticpages:
+    path: %path.modules%staticpages/
+    menu_path: Содержание/Статические страницы
+    action_class: StaticPagesAction
+    module_class: StaticPagesModule
+    icon: page_edit.png
+    name: Статтические страницы
+    access:
+      enable: true
+      acl: [acl_static_pages]
+    smarty:
+      template: %modules.staticpages.path%template/
+      compile: %path.smarty.compile%
+      
+  logview:
+    path: %path.modules%logview/
+    menu_path: Администрирование/Просмотр лога
+    action_class: LogViewAction
+    module_class: LogViewModule
+    name: Просмотр лога
+    icon: report.png
+    pager:
+      show_per_page: 15;
+    access:
+      enable: true
+      acl: [acl_logview]
+    smarty:
+      template: %modules.logview.path%template/
+      compile: %path.smarty.compile% 
+      
+  menu:
+    path: %path.modules%menu/
+    menu_path: Содержание/Меню
+    action_class: MenuAction
+    module_class: MenuModule
+    name: Меню
+    icon: report.png
+    smarty:
+      template: %modules.menu.path%template/
+      compile: %path.smarty.compile%      
+
+  tabs:
+    path: %path.modules%tabs/
+    menu_path: Содержание/Табсы
+    action_class: TabsAction
+    module_class: TabsModule
+    name: Табсы
+    icon: report.png
+    smarty:
+      template: %modules.tabs.path%template/
+      compile: %path.smarty.compile% 
+            
+  tourtype:
+    path: %path.modules%tourtype/
+    menu_path: Справочники/Типы туров
+    action_class: TourTypeAction
+    module_class: TourTypeModule
+    name: Типы туров
+    icon: report.png 
+    pager:
+      show_per_page: 50;
+    access:
+      enable: true      
+    smarty:
+      template: %modules.tourtype.path%template/
+      compile: %path.smarty.compile% 
+      
+  resort:
+    path: %path.modules%resort/
+    menu_path: Справочники/Курорты
+    action_class: ResortAction
+    module_class: ResortModule
+    name: Курорты
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true
+    icon: report.png
+    smarty:
+      template: %modules.resort.path%template/
+      compile: %path.smarty.compile% 
+  
+  hoteltype:
+    path: %path.modules%hoteltype/
+    menu_path: Справочники/Классы отелей
+    action_class: HotelTypeAction
+    module_class: HotelTypeModule
+    name: Классы отелей
+    pager:
+      show_per_page: 50;
+    access:
+      enable: true      
+    icon: report.png
+    smarty:
+      template: %modules.hoteltype.path%template/
+      compile: %path.smarty.compile%  
+      
+  country:
+    path: %path.modules%country/
+    menu_path: Справочники/Страны
+    action_class: CountryAction
+    module_class: CountryModule
+    name: Страны
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png
+    smarty:
+      template: %modules.country.path%template/
+      compile: %path.smarty.compile%
+      
+  transliterate:
+    path: %path.modules%transliterate/
+    menu_path: ~
+    action_class: TransliterateAction
+    module_class: TransliterateModule
+    name: Переводы интерфейсов 
+    pager: 
+      show_per_page: 20
+    icon: report.png
+    access:
+      enable: false
+    smarty:
+      template: %modules.transliterate.path%template/
+      compile: %path.smarty.compile%   
+             
+  hotel:
+    path: %path.modules%hotel/
+    menu_path: Справочники/Отели
+    action_class: HotelAction
+    module_class: HotelModule
+    name: Отели
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.hotel.path%template/
+      compile: %path.smarty.compile%
+   
+  subscribe:
+    path: %path.modules%subscribe/
+    menu_path: Справочники/Подписка
+    action_class: SubscribeAction
+    module_class: SubscribeModule
+    name: Подписка
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.subscribe.path%template/
+      compile: %path.smarty.compile%
+  
+  tour:
+    path: %path.modules%tour/
+    menu_path: Справочники/Туры
+    action_class: TourAction
+    module_class: TourModule
+    name: Туры
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.tour.path%template/
+      compile: %path.smarty.compile%	
+      
+  advertise:
+    path: %path.modules%advertise/
+    menu_path: Содержание/Центральный промоблок
+    action_class: AdvertiseAction
+    module_class: AdvertiseModule
+    name: Центральный промоблок
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.advertise.path%template/
+      compile: %path.smarty.compile%
+	        
+  icon:
+    path: %path.modules%icon/
+    menu_path: Содержание/Иконки-сервисы
+    action_class: IconAction
+    module_class: IconModule
+    name: Иконки-сервисы
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.icon.path%template/
+      compile: %path.smarty.compile%
+      
+  news:
+    path: %path.modules%news/
+    menu_path: Содержание/Новости
+    action_class: NewsAction
+    module_class: NewsModule
+    name: Новости
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.news.path%template/
+      compile: %path.smarty.compile%      
+      
+  hotoffer:
+    path: %path.modules%hotoffer/
+    menu_path: Содержание/Горящие предложения
+    action_class: HotOfferAction
+    module_class: HotOfferModule
+    name: Горящие предложения
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.hotoffer.path%template/
+      compile: %path.smarty.compile%      
+      
+  order:
+    path: %path.modules%order/
+    menu_path: Содержание/Заказы
+    action_class: OrderAction
+    module_class: OrderModule
+    name: Заказы
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.order.path%template/
+      compile: %path.smarty.compile%            
+	  
+  ordertour:
+    path: %path.modules%ordertour/
+    menu_path: Содержание/Заказы туров
+    action_class: OrderTourAction
+    module_class: OrderTourModule
+    name: Заказы
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.ordertour.path%template/
+      compile: %path.smarty.compile%            	  
+	  
+  codedictionary:
+    path: %path.modules%codedictionary/
+    menu_path: Администрирование/Сторонние коды
+    action_class: CodeDictionaryAction
+    module_class: CodeDictionaryModule
+    name: Сторонние коды
+    icon: report.png
+    smarty:
+      template: %modules.codedictionary.path%template/
+      compile: %path.smarty.compile%           
+
+  priceofday:
+    path: %path.modules%priceofday/
+    menu_path: Содержание/Цена дня
+    action_class: PriceOfDayAction
+    module_class: PriceOfDayModule
+    name: Цена дня
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.priceofday.path%template/
+      compile: %path.smarty.compile%      
+
+  recommend:
+    path: %path.modules%recommend/
+    menu_path: Содержание/Мы рекомендуем
+    action_class: recommendAction
+    module_class: recommendModule
+    name: Мы рекомендуем
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.recommend.path%template/
+      compile: %path.smarty.compile%      
+
+  mix:
+    path: %path.modules%mix/
+    menu_path: Содержание/Сезонный микс
+    action_class: MixAction
+    module_class: MixModule
+    name: Сезонный микс
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.mix.path%template/
+      compile: %path.smarty.compile%      
+
+  contacts:
+    path: %path.modules%contacts/
+    menu_path: Содержание/Контакты
+    action_class: ContactsAction
+    module_class: ContactsModule
+    name: Контакты
+    pager:
+      show_per_page: 20;
+    access:
+      enable: true      
+    icon: report.png          
+    smarty:
+      template: %modules.contacts.path%template/
+      compile: %path.smarty.compile%      
+	  	  

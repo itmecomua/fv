@@ -1,0 +1,107 @@
+<hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>USER ERROR:</h6> "<B>Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getViewURL() (Smarty_Compiler.class.php, line 455)</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\smarty\smarty.class.php</B> on line <B>1092</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvDispatcher::process()<br />
+<B>#2</B>: in class fvDispatcher::forward("countries")<br />
+<B>#3</B>: in class fvFilterChain::execute()<br />
+<B>#4</B>: in class fvActionFilter::execute()<br />
+<B>#5</B>: in class fvModule::showModule("index")<br />
+<B>#6</B>: in function call_user_func(array(2), array(0))<br />
+<B>#7</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#8</B>: in class CountriesModule::showList()<br />
+<B>#9</B>: in class fvModule::__display("list.tpl")<br />
+<B>#10</B>: in class Smarty::fetch("countries.list.tpl")<br />
+<B>#11</B>: in class Smarty::_compile_resource("countries.list.tpl", "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.php")<br />
+<B>#12</B>: in class Smarty::_compile_source("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL, "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.inc")<br />
+<B>#13</B>: in class Smarty_Compiler::_compile_file("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL)<br />
+<B>#14</B>: in class Smarty_Compiler::_compile_tag("country_item->getViewURL()")<br />
+<B>#15</B>: in class Smarty_Compiler::_syntax_error("unrecognized tag: country_item->getViewURL()", 256, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 455)<br />
+<B>#16</B>: in class Smarty::_trigger_fatal_error("syntax error: unrecognized tag: country_item->getViewURL()", "countries.list.tpl", 24, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 455, 256)<br />
+<B>#17</B>: in class Smarty::trigger_error("[in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getViewURL() (Smarty_...", 256)<br />
+<B>#18</B>: in function trigger_error("Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getView...", 256)<br />
+<B>#19</B>: in function errorHandler(256, "Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getView...", "D:\WWW\mytravel.nn.ru\smarty\smarty.class.php", 1092, array(2))<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>USER ERROR:</h6> "<B>Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.class.php, line 599)</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\smarty\smarty.class.php</B> on line <B>1092</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvDispatcher::process()<br />
+<B>#2</B>: in class fvDispatcher::forward("countries")<br />
+<B>#3</B>: in class fvFilterChain::execute()<br />
+<B>#4</B>: in class fvActionFilter::execute()<br />
+<B>#5</B>: in class fvModule::showModule("index")<br />
+<B>#6</B>: in function call_user_func(array(2), array(0))<br />
+<B>#7</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#8</B>: in class CountriesModule::showList()<br />
+<B>#9</B>: in class fvModule::__display("list.tpl")<br />
+<B>#10</B>: in class Smarty::fetch("countries.list.tpl")<br />
+<B>#11</B>: in class Smarty::_compile_resource("countries.list.tpl", "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.php")<br />
+<B>#12</B>: in class Smarty::_compile_source("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL, "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.inc")<br />
+<B>#13</B>: in class Smarty_Compiler::_compile_file("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL)<br />
+<B>#14</B>: in class Smarty_Compiler::_compile_tag("country_item->getViewURL()")<br />
+<B>#15</B>: in class Smarty_Compiler::_syntax_error("unrecognized tag ''", 256, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 599)<br />
+<B>#16</B>: in class Smarty::_trigger_fatal_error("syntax error: unrecognized tag ''", "countries.list.tpl", 24, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 599, 256)<br />
+<B>#17</B>: in class Smarty::trigger_error("[in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.class.php, line ...", 256)<br />
+<B>#18</B>: in function trigger_error("Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.cl...", 256)<br />
+<B>#19</B>: in function errorHandler(256, "Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.cl...", "D:\WWW\mytravel.nn.ru\smarty\smarty.class.php", 1092, array(2))<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>USER ERROR:</h6> "<B>Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getName()|escape (Smarty_Compiler.class.php, line 455)</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\smarty\smarty.class.php</B> on line <B>1092</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvDispatcher::process()<br />
+<B>#2</B>: in class fvDispatcher::forward("countries")<br />
+<B>#3</B>: in class fvFilterChain::execute()<br />
+<B>#4</B>: in class fvActionFilter::execute()<br />
+<B>#5</B>: in class fvModule::showModule("index")<br />
+<B>#6</B>: in function call_user_func(array(2), array(0))<br />
+<B>#7</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#8</B>: in class CountriesModule::showList()<br />
+<B>#9</B>: in class fvModule::__display("list.tpl")<br />
+<B>#10</B>: in class Smarty::fetch("countries.list.tpl")<br />
+<B>#11</B>: in class Smarty::_compile_resource("countries.list.tpl", "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.php")<br />
+<B>#12</B>: in class Smarty::_compile_source("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL, "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.inc")<br />
+<B>#13</B>: in class Smarty_Compiler::_compile_file("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL)<br />
+<B>#14</B>: in class Smarty_Compiler::_compile_tag("country_item->getName()|escape")<br />
+<B>#15</B>: in class Smarty_Compiler::_syntax_error("unrecognized tag: country_item->getName()|escape", 256, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 455)<br />
+<B>#16</B>: in class Smarty::_trigger_fatal_error("syntax error: unrecognized tag: country_item->getName()|escape", "countries.list.tpl", 24, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 455, 256)<br />
+<B>#17</B>: in class Smarty::trigger_error("[in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getName()|escape (Sma...", 256)<br />
+<B>#18</B>: in function trigger_error("Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getName...", 256)<br />
+<B>#19</B>: in function errorHandler(256, "Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag: country_item->getName...", "D:\WWW\mytravel.nn.ru\smarty\smarty.class.php", 1092, array(2))<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>USER ERROR:</h6> "<B>Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.class.php, line 599)</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\smarty\smarty.class.php</B> on line <B>1092</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvDispatcher::process()<br />
+<B>#2</B>: in class fvDispatcher::forward("countries")<br />
+<B>#3</B>: in class fvFilterChain::execute()<br />
+<B>#4</B>: in class fvActionFilter::execute()<br />
+<B>#5</B>: in class fvModule::showModule("index")<br />
+<B>#6</B>: in function call_user_func(array(2), array(0))<br />
+<B>#7</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#8</B>: in class CountriesModule::showList()<br />
+<B>#9</B>: in class fvModule::__display("list.tpl")<br />
+<B>#10</B>: in class Smarty::fetch("countries.list.tpl")<br />
+<B>#11</B>: in class Smarty::_compile_resource("countries.list.tpl", "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.php")<br />
+<B>#12</B>: in class Smarty::_compile_source("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL, "D:\WWW\mytravel.nn.ru/app/frontend/template/template_c/\%%5F^5FB^5FBDBA43%%countries.list.tpl.inc")<br />
+<B>#13</B>: in class Smarty_Compiler::_compile_file("countries.list.tpl", "<div class="block_a_wrap"><br />	<div class="block_a_lft"><br />		<div class="block_a_rt"><br />			<div class="bloc...", NULL)<br />
+<B>#14</B>: in class Smarty_Compiler::_compile_tag("country_item->getName()|escape")<br />
+<B>#15</B>: in class Smarty_Compiler::_syntax_error("unrecognized tag ''", 256, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 599)<br />
+<B>#16</B>: in class Smarty::_trigger_fatal_error("syntax error: unrecognized tag ''", "countries.list.tpl", 24, "D:\WWW\mytravel.nn.ru\smarty\Smarty_Compiler.class.php", 599, 256)<br />
+<B>#17</B>: in class Smarty::trigger_error("[in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.class.php, line ...", 256)<br />
+<B>#18</B>: in function trigger_error("Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.cl...", 256)<br />
+<B>#19</B>: in function errorHandler(256, "Smarty error: [in countries.list.tpl line 24]: syntax error: unrecognized tag '' (Smarty_Compiler.cl...", "D:\WWW\mytravel.nn.ru\smarty\smarty.class.php", 1092, array(2))<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>CAUGHT EXCEPTION:</h6> "<B>Call to undefined function</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\classes\entity\fvroot_manager.class.php</B> on line <B>284</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvRootManager::__call("getPrefix_path", array(0))<br />
+<B>#2</B>: in class CountryManager::getPrefix_path()<br />
+<B>#3</B>: in class CountriesModule::showList()<br />
+<B>#4</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#5</B>: in function call_user_func(array(2), array(0))<br />
+<B>#6</B>: in class fvModule::showModule("index")<br />
+<B>#7</B>: in class fvActionFilter::execute()<br />
+<B>#8</B>: in class fvFilterChain::execute()<br />
+<B>#9</B>: in class fvDispatcher::forward("countries")<br />
+<B>#10</B>: in class fvDispatcher::process()<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>CAUGHT EXCEPTION:</h6> "<B>Call to undefined function</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\classes\entity\fvroot_manager.class.php</B> on line <B>284</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvRootManager::__call("getPrefix_path", array(0))<br />
+<B>#2</B>: in class CountryManager::getPrefix_path()<br />
+<B>#3</B>: in class CountriesModule::showList()<br />
+<B>#4</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#5</B>: in function call_user_func(array(2), array(0))<br />
+<B>#6</B>: in class fvModule::showModule("index")<br />
+<B>#7</B>: in class fvActionFilter::execute()<br />
+<B>#8</B>: in class fvFilterChain::execute()<br />
+<B>#9</B>: in class fvDispatcher::forward("countries")<br />
+<B>#10</B>: in class fvDispatcher::process()<br />
+<br /><hr/><hr/><hr/><hr/>23-03-2012<br><br><br><h2>Debug Msg</h2><h6>CAUGHT EXCEPTION:</h6> "<B>Call to undefined function</B>" in <FONT color="blue"><B>D:\WWW\mytravel.nn.ru\classes\entity\fvroot_manager.class.php</B> on line <B>284</B></FONT><BR /><br/><B>Trace</B>: <br /><B>#1</B>: in class fvRootManager::__call("getPrefix_path", array(0))<br />
+<B>#2</B>: in class CountryManager::getPrefix_path()<br />
+<B>#3</B>: in class CountriesModule::showList()<br />
+<B>#4</B>: in class CountriesModule::showIndex(array(0))<br />
+<B>#5</B>: in function call_user_func(array(2), array(0))<br />
+<B>#6</B>: in class fvModule::showModule("index")<br />
+<B>#7</B>: in class fvActionFilter::execute()<br />
+<B>#8</B>: in class fvFilterChain::execute()<br />
+<B>#9</B>: in class fvDispatcher::forward("countries")<br />
+<B>#10</B>: in class fvDispatcher::process()<br />
+<br /><hr/><hr/>

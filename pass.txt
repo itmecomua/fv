@@ -1,0 +1,12 @@
+FTP host: 		ftp.h4.newname.com.ua
+FTP login: 		newkompas
+FTP password: 	kJEjpr3q
+
+DB web: 		http://mysql.h4.newname.com.ua
+DB host: 		localhost
+DB name/login: 	newkompas
+DB password: 	THniXFLg
+
+newkompas_dev_dima: 		FLdXvEPZ
+newkompas_dev_alex: 		VuX7sKMf
+newkompas_html_alexandr: 	7u6rVidc
