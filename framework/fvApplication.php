@@ -1,7 +1,13 @@
 <?php
-class fvApplication()
+class fvApplication
 {
-       if (defined("FV_APP")) {
+    public function __construct(){
+        
+    }
+    
+    public function process(){
+    
+        if (defined("FV_APP")) {
 
             //Load main application config
             
@@ -11,5 +17,7 @@ class fvApplication()
 
             //Load app classes
 
-        }
+        }        
+    }   
+
 }

@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 class fvSite{
-    private static $_classMap       =array();
-    private static $_aliases        =array();
-    private static $_includePaths   =array();
+    private static $_classMap       = array();
+    private static $_aliases        = array();
+    private static $_includePaths   = array();
     
     private static $_fvConfig;
     private static $_Db;
@@ -14,7 +14,7 @@ class fvSite{
     private static $_fvParams;    
     private static $_fvDispatcher;
    
-    public static function start($config=null){     
+    public static function start( $config = null ){     
        self::startAutoload($config);
        self::startConfig($config);
        self::startDb();
@@ -24,21 +24,26 @@ class fvSite{
        self::$_fvDispatcher = new fvDispatcher();
        self::$_fvDispatcher->process();
     }
+    
     private static function startAutoload($config){
        self::$_classMap = $config['classMap'];
        self::$_aliases = $config['aliases'];
        self::$_includePaths = $config['includePaths'];
        spl_autoload_register( array('fvSite','autoload') );        
     }
+    
     private static function startConfig($config){
        self::$_fvConfig = new fvConfig($config);
     }
+    
     private static function startDb(){
        
     }   
+    
     private static function startSession(){
         
     }
+    
     private static function startTemplateEngine(){
         
     }
@@ -46,7 +51,15 @@ class fvSite{
     public static function autoload($className)
     {
         /*
-        *   ���� ���� � ������ - ����� �� �������
+        *  TODO :
+        * вместо того что бы использовать standAlone (getInstance)
+        * блокируем создание обьектов в этом методе (создаем один раз и сохраняем ссылку)
+        * классы которые будут создаваться только один раз - пишем в файл конфигурации
+        */
+        
+        
+        /*
+        *   если есть в масиве - берем из массива
         */
         if(isset(self::$_classMap[$className]))
         {
@@ -55,8 +68,8 @@ class fvSite{
         else
         {
             /*
-            *   ���� ��� � ������� � ������ �� �� ������������ ���� (namespace  PHP 5.3)
-            *   ���� � "����� ���������"
+            *   Если нет в массиве и запрос НЕ на пространство имен (namespace  PHP 5.3)
+            *   ищем в "путях включения"
             */
             if(strpos($className,'\\')===false)
             {
@@ -74,8 +87,8 @@ class fvSite{
             else 
             {
                 /*
-                *   ���� ��� � ������� � ������ �� ������������ ���� (namespace  PHP 5.3)
-                *   ������ ��� ����
+                *   Если нет в массиве и запрос на пространство имен (namespace  PHP 5.3)
+                *   отдаем что есть
                 */
                 $namespace=str_replace('\\','.',ltrim($className,'\\'));
                 if( ($path=self::getPathOfAlias($namespace))!==false ){

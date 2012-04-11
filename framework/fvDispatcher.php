@@ -1,38 +1,42 @@
-<?php
+ï»¿<?php
 
 class fvDispatcher {
     private $app;
-    
-    
-    protected $_request;
-    protected $_responce;
-    protected $_params;
-    protected $_route;
-    protected $_redirectCount;
-
-    protected $_statusText;
+    private $_request;
+    private $_responce;
+    private $_params;
+    private $_route;
+    private $_redirectCount;
+    private $_statusText;
 
     const MAX_REDIRECT = 100;
 
     public function __construct() {
-        $this->_request = fvRequest::getInstance();
-        $this->_route = fvRoute::getInstance();
-        $this->_responce = fvResponce::getInstance();
+        /* TODO : Ñ€Ð°Ð·ÐºÐ¾Ð¼ÐµÐ½Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ð¾Ñ‚Ð¾Ð¼...
+        $this->_request = new fvRequest();
+        $this->_route = new fvRoute;
+        $this->_responce = new fvResponce;
+        */
     }
+    
     function process() {       
-        $this->resolveApp($this->_request->getRequestParameter("__url"));
+        //$this->resolveApp($this->_request->getRequestParameter("__url"));
+        $this->resolveApp('backend');
+        echo "1) Ð½ÑƒÐ¶Ð½Ð¾ Ñ€Ð°Ð·Ñ€ÐµÑˆÐ¸Ñ‚ÑŒ app (backend/frontend)";
         /*
-        * Ïîëó÷àåì âñå êîíòðîëëåðû åêøèíû è âûçûâàåì èõ ïîñëå ýòîãî 
-        * çàïèõèâàåì ïîëó÷èíóþ èíôó â ñìàðòè è ïîêàçûâàåì âüþõè
+        * ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð²ÑÐµ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ñ‹ ÐµÐºÑˆÐ¸Ð½Ñ‹ Ð¸ Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð¸Ñ… Ð¿Ð¾ÑÐ»Ðµ ÑÑ‚Ð¾Ð³Ð¾ 
+        * Ð·Ð°Ð¿Ð¸Ñ…Ð¸Ð²Ð°ÐµÐ¼ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ð½ÑƒÑŽ Ð¸Ð½Ñ„Ñƒ Ð² ÑÐ¼Ð°Ñ€Ñ‚Ð¸ Ð¸ Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð²ÑŒÑŽÑ…Ð¸
         * 
         */ 
     }
+    
+    /*
+    * Frontend Or Backend
+    * Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ‚Ð¾Ð³Ð¾ ÐºÐ°ÐºÐ¾Ð¹ Ð·Ð°Ð¿Ñ€Ð¾Ñ - Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ð½ÑƒÐ¶Ð½Ñ‹Ðµ Ð¿ÑƒÑ‚Ð¸ Ð¸ ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð¾Ð±ÑŒÐµÐºÑ‚ Application
+    * 
+    */    
     function resolveApp($request) {       
-        /*
-        * Frontend Or Backend
-        * 
-        * â çàâèñèìîñòè îò òîãî êàêîé çàïðîñ - ôîðìèðóåì íóæíûå ïóòè è ñîçäàåì îáüåêò Application
-        */
+
         $this->app = new fvApplication();
     }
 
