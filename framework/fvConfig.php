@@ -1,16 +1,30 @@
 <?php
 class fvConfig {
-	
-	protected $configDir;
 	protected $config;
 	protected $configSeparator;
 
- 	function __construct ($configDir, $configSeparator = ".") {
-		$this->configDir = $configDir;
-		$this->configSeparator = $configSeparator;
-		$this->config = array();
+ 	public function __construct ($config, $configSeparator = ".") {
+		$this->config = $config;
+        $this->configSeparator = $configSeparator;
 	}
 
+    public function get($cPath, $default = null){
+        $path = explode($this->configSeparator, $cPath);
+        $result = $this->config;
+        foreach ($path as $step) {
+            if (isset($result[$step])) {
+                $result = $result[$step];
+            }
+            else return $default;
+        }
+        return $result; 
+    }
+        
+    public function getAppList()
+    {
+        return $this->_config['appList'];
+    }
+    
     
 	protected function _parseValue($value) {
 	    
@@ -178,20 +192,7 @@ $this->mergeConfig(&$this->config, ' . var_export($configData, true) . ");";
 		return $this->config;
 	}
 	
-	function get($cPath, $default = null){
-		$path = explode($this->configSeparator, $cPath);
-		
-		$result = $this->config;
-		
-		foreach ($path as $step) {
-			if (isset($result[$step])) {
-				$result = $result[$step];
-			}
-			else return $default;
-		}
-		
-		return $result; 
-	}
+
     
     public function getModuleName($module = false)
     {

@@ -20,15 +20,15 @@ class fvSite{
        self::startDb();
        self::startSession();
        self::startTemplateEngine();
-       
+
        self::$_fvDispatcher = new fvDispatcher();
        self::$_fvDispatcher->process();
     }
     
     private static function startAutoload($config){
-       self::$_classMap = $config['classMap'];
-       self::$_aliases = $config['aliases'];
-       self::$_includePaths = $config['includePaths'];
+       self::$_classMap     = $config['classmap'];
+       self::$_aliases      = $config['aliases'];
+       self::$_includePaths = $config['includepaths'];
        spl_autoload_register( array('fvSite','autoload') );        
     }
     
@@ -55,6 +55,7 @@ class fvSite{
         * вместо того что бы использовать standAlone (getInstance)
         * блокируем создание обьектов в этом методе (создаем один раз и сохраняем ссылку)
         * классы которые будут создаваться только один раз - пишем в файл конфигурации
+        * (ой шо то мне кажетсо шо ничо из этого не выйдет)
         */
         
         
@@ -130,7 +131,7 @@ class fvSite{
         }
     }    
     
-    public static function getfvConfig(){
+    public static function getConfig(){
         return self::$_fvConfig;
     }
    
