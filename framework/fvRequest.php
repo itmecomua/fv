@@ -13,18 +13,20 @@ class fvRequest {
 
     protected $method;
     protected $escapeMethod;
-    private $UrlString;
 
-    public function __construct () {
+    protected function __construct () {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->escapeMethod = "htmlspecialchars";
-        $this->UrlString = $_SERVER['REQUEST_URI'];
     }
 
-    public function getRequestApp()
-    {
-        $Url = explode( '/' , trim( $this->UrlString , '/' ) );
-        return $Url[0];
+    public static function getInstance() {
+        static $instance;
+
+        if (!isset($instance)) {
+             $instance = new self;
+        }
+
+        return $instance;
     }
 
     public function getRequestMethod() {

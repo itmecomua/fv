@@ -1,4 +1,9 @@
 ﻿<?php
+/*
+*  1) Установака автозагрузчика
+*  2) Инициализация различных частей движка
+*  3) Создание диспетчера и передача ему управления
+*/
 class fvSite{
     private static $_classMap       = array();
     private static $_aliases        = array();
@@ -7,11 +12,6 @@ class fvSite{
     private static $_fvConfig;
     private static $_Db;
     private static $_fvSession;
-    private static $_Template;
-    private static $_currentModules;
-    private static $_Layoult;
-    private static $_fvRequest;
-    private static $_fvParams;    
     private static $_fvDispatcher;
    
     public static function start( $config = null ){     

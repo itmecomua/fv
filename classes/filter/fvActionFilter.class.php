@@ -15,7 +15,8 @@ class fvActionFilter implements iFilter {
         
         $actionName = fvRoute::getInstance()->getActionName();
         
-        if (($action = fvDispatcher::getInstance()->getModule(fvRoute::getInstance()->getModuleName(), 'action')) === false) {
+        if (($action = fvDispatcher::getInstance()->getModule(fvRoute::getInstance()->getModuleName(), 'action')) === false)
+         {
             fvDispatcher::getInstance()->redirect(fvSite::$fvConfig->get('page_404', 0, 404));
         }
         
@@ -34,7 +35,8 @@ class fvActionFilter implements iFilter {
                 $layoult->setModuleResult($module->showModule($actionName));
                 break;
             case fvAction::$FV_NO_ACTION:
-                if (($module === false) || (($moduleResult = $module->showModule($actionName)) == fvModule::$FV_NO_MODULE)) {
+                if (($module === false) || (($moduleResult = $module->showModule($actionName)) == fvModule::$FV_NO_MODULE)) 
+                {
                     fvDispatcher::getInstance()->redirect(fvSite::$fvConfig->get('page_404', 0, 404));
                 }
                 $layoult->setModuleResult($moduleResult);
@@ -49,7 +51,8 @@ class fvActionFilter implements iFilter {
             case fvAction::$FV_NO_LAYOULT:
             case fvAction::$FV_AJAX_CALL:
                     $responce->useLayoult(false);
-                    if (($module !== false) && (($moduleResult = $module->showModule($actionName)) != fvModule::$FV_NO_MODULE)) {
+                    if (($module !== false) && (($moduleResult = $module->showModule($actionName)) != fvModule::$FV_NO_MODULE)) 
+                    {
                         $responce->setResponceBody($moduleResult);
                     }
                 break;
@@ -58,7 +61,10 @@ class fvActionFilter implements iFilter {
                 break;
         }
         if ($responce->useLayoult()) {
-            $responce->setResponceBody($layoult->showPage());
+            
+            $tmp  = $layoult->showPage();
+            
+            $responce->setResponceBody($tmp);
         }
         return true;
     }
