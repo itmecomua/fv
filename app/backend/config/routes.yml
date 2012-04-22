@@ -1,4 +1,0 @@
-routes:
-  default:
-    url: /:module/:action
-    params: []

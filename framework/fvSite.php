@@ -5,15 +5,18 @@
 *  3) Создание диспетчера и передача ему управления
 */
 class fvSite{
-    private static $_classMap       = array();
+    private static $_classMapPaths  = array();
     private static $_aliases        = array();
     private static $_includePaths   = array();
-    
     private static $_fvConfig;
+    private static $_fvDispatcher;    
+	private static $_app;
+	
+/*
     private static $_Db;
     private static $_fvSession;
-    private static $_fvDispatcher;
-   
+
+*/
     public static function start( $config = null ){     
        self::startAutoload($config);
        self::startConfig($config);
@@ -26,28 +29,12 @@ class fvSite{
     }
     
     private static function startAutoload($config){
-       self::$_classMap     = $config['classmap'];
-       self::$_aliases      = $config['aliases'];
-       self::$_includePaths = $config['includepaths'];
+       self::$_classMapPaths    = $config['classmapPaths'];
+       self::$_aliases          = $config['aliases'];
+       self::$_includePaths     = $config['includepaths'];
        spl_autoload_register( array('fvSite','autoload') );        
     }
-    
-    private static function startConfig($config){
-       self::$_fvConfig = new fvConfig($config);
-    }
-    
-    private static function startDb(){
        
-    }   
-    
-    private static function startSession(){
-        
-    }
-    
-    private static function startTemplateEngine(){
-        
-    }
-    
     public static function autoload($className)
     {
         /*
@@ -60,11 +47,11 @@ class fvSite{
         
         
         /*
-        *   если есть в масиве - берем из массива
+        *   если путь к классу есть в масиве - берем из массива
         */
-        if(isset(self::$_classMap[$className]))
+        if(isset(self::$_classMapPaths[$className]))
         {
-            include(self::$_classMap[$className]);
+            include(self::$_classMapPaths[$className]);
         }
         else
         {
@@ -79,7 +66,7 @@ class fvSite{
                     $classFile=$path.DIRECTORY_SEPARATOR.$className.'.php';
                     if(is_file($classFile))
                     {
-                        self::$_classMap[$className] = $classFile;
+                        self::$_classMapPaths[$className] = $classFile;
                         include($classFile);
                         break;
                     }
@@ -104,6 +91,22 @@ class fvSite{
         }
         return true;
     }
+    
+    private static function startConfig($config){
+       self::$_fvConfig = new fvConfig($config);
+    }
+    
+    private static function startDb(){
+       
+    }   
+    
+    private static function startSession(){
+        
+    }
+    
+    private static function startTemplateEngine(){
+        
+    }    
     
     public static function getPathOfAlias($alias)
     {
@@ -134,5 +137,13 @@ class fvSite{
     public static function getConfig(){
         return self::$_fvConfig;
     }
+	
+	public static function setApplication($app)
+	{
+		if(self::$_app===null || $app===null)
+			self::$_app=$app;
+		else
+			throw new CException(Yii::t('yii','Yii application can only be created once.'));
+	}	
    
 }

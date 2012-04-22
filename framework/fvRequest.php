@@ -1,34 +1,30 @@
 <?php
-
 class fvRequest {
-
+/*
+    protected $method;
     const GET = 'GET';
     const POST = 'POST';
     const PUT = 'PUT';
     const HEAD = 'HEAD';
-
     const ERROR_FILE_SIZE = 1;
     const ERROR_FILE_TYPE = 2;
     const ERROR_SUCCESS = 0;
-
-    protected $method;
     protected $escapeMethod;
 
-    protected function __construct () {
-        $this->method = $_SERVER['REQUEST_METHOD'];
+    public function __construct () {
+        $this->method       = $_SERVER['REQUEST_METHOD'];
         $this->escapeMethod = "htmlspecialchars";
     }
-
-    public static function getInstance() {
-        static $instance;
-
-        if (!isset($instance)) {
-             $instance = new self;
-        }
-
-        return $instance;
+*/
+    public function getRequestUrl() {
+        return trim( fvSite::getConfig()->get('requestUrlSource') , "/");
+    }
+    
+     public function getRequestUrlparts() {
+        return explode( "/" , $this->getRequestUrl()  );
     }
 
+/*
     public function getRequestMethod() {
         return $this->method;
     }
@@ -150,7 +146,8 @@ class fvRequest {
          move_uploaded_file($this->getUploadTmpName($fileName, $idx), $destination);
     }
 
-    public function parseQueryString($query, $param, $value = null) {
+    public function parseQueryString($query, $param, $value = null) 
+    {
         list($url, $params) = explode('?', $query);
 
         $found = false;
@@ -175,6 +172,5 @@ class fvRequest {
 
         return $url . (($result)?"?$result":'');
     }
+*/    
 }
-
-?>

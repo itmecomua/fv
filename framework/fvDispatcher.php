@@ -12,6 +12,10 @@
 */
 
 class fvDispatcher {
+    private $curentAppName;
+    private $_app;
+
+
     private $_request;
     private $_application;
     private $_filter;
@@ -36,8 +40,8 @@ class fvDispatcher {
 
     public function __construct() {
         $this->_request     = new fvRequest();
+        $this->_route       = new fvRoute();
         /*
-        $this->_route       = fvRoute::getInstance();
         $this->_responce    = fvResponce::getInstance();
         $this->_config      = fvSite::getFvConfig();
         */
@@ -45,14 +49,8 @@ class fvDispatcher {
 
     function process() 
     {
-        $this->app = new fvApplication( $this->resolveApp( $this->_request->getRequestApp() ) );
-        $this->_route->process($url);
-        
-        while( $ActionObj = $this->app->getAction() )
-        {
-            $ActionObj->doExecute();
-        }        
-        
+        $this->curentAppName = $this->resolveAppName($this->_request->getRequestUrlparts());
+        $this->_app = new fvApplication($this->curentAppName);
         
         /*
         if (++$this->_redirectCount > self::MAX_REDIRECT){
@@ -67,13 +65,20 @@ class fvDispatcher {
        
     }
     
-    private function resolveApp($RequestApp)
-    {
-        if( !(in_array( $RequestApp , fvSite::getConfig()->get('applist') )) )
-        {
-            $RequestApp = fvSite::getConfig()->get('frontendapp');
+/* 
+* узнаем какой аппликейшн запрашивает пользователеь 
+* 
+*/
+    private function resolveAppName( $requestUrlParts ){                      
+        $appList    = fvSite::getConfig()->get('applist');
+        $defaultApp = fvSite::getConfig()->get('defaultapp');        
+        $resultApp  = isset($requestUrlParts[0])?$requestUrlParts[0]:"";
+       
+        if( $resultApp === "" || (!in_array( $resultApp , $appList ) ) ){
+            $resultApp = $defaultApp;
         }
-        return $RequestApp;
+
+        return $resultApp;
     }
 
 
@@ -82,22 +87,7 @@ class fvDispatcher {
 
     
     
-    function getModule($module, $type) 
-    {
-        
-        if (!class_exists($class = fvSite::$fvConfig->get("modules.{$module}.{$type}_class"))) 
-        {
-            if (file_exists(fvSite::$fvConfig->get("modules.{$module}.path") . "{$type}.class.php")) 
-            {
-                require_once(fvSite::$fvConfig->get("modules.{$module}.path") . "{$type}.class.php");
-            }
-            else {
-                require_once(fvSite::$fvConfig->get("modules.staticpages.path") . "{$type}.class.php");
-                $class = fvSite::$fvConfig->get("modules.staticpages.{$type}_class");
-            }
-        }
-        return new $class;
-    }
+
 
     function redirect($url, $delay = 0, $status = 302) {
         $this->_responce = fvResponce::getInstance();
@@ -129,7 +119,7 @@ class fvDispatcher {
         $module = fvDispatcher::getInstance()->getModule(fvRoute::getInstance()->getModuleName(), 'module');
         
         $responce->useLayoult(true);
-        //var_dump($actionName);        
+      
         switch ($result) 
         {
             case fvAction::$FV_OK:

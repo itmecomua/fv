@@ -1,3 +1,0 @@
-Use this URL to reset the Editor to your settings:
-
-http://highslide.com/editor/?config=%7B%22lang%22%3A+%22ru%22,+%22preset%22%3A+%22mini-gallery%22,+%22applyDimming%22%3A+true,+%22dimmingOpacity%22%3A+0.65,+%22hideThumbOnExpand%22%3A+false,+%22alignment%22%3A+%22center%22,+%22enableGallery%22%3A+true,+%22controlsOffsetY%22%3A+-15,+%22numberPosition%22%3A+%22caption%22,+%22enableThumbstrip%22%3A+false,+%22minigallery%22%3A+%22first%22%7D
