@@ -18,17 +18,51 @@ class fvSite{
 
 */
     public static function start( $config = null ){     
-       self::startAutoload($config);
-       self::startConfig($config);
-       self::startDb();
-       self::startSession();
-       self::startTemplateEngine();
+        self::startExceptionGate();
+        try
+        {
+           $a = 0;
+           //throw new Exception('Не сцепленное Деление на ноль.');
+           $b = 5/$a;
+           
+           
+           self::startAutoload($config);
+           self::startConfig($config);
+           self::startDb();
+           self::startSession();
+           self::startTemplateEngine();
 
-       self::$_fvDispatcher = new fvDispatcher();
-       self::$_fvDispatcher->process();
+           self::$_fvDispatcher = new fvDispatcher();
+           self::$_fvDispatcher->process();
+
+       }
+       catch(Exception $ExceptionObj)
+       {
+           echo "catch" . "<br>";
+           self::ExceptionGate($ExceptionObj);
+       }
+    }
+
+    private static function startExceptionGate()
+    {
+        error_reporting(E_ALL);
+        set_error_handler("self::ExceptionGateWraper");    
     }
     
-    private static function startAutoload($config){
+    private static function ExceptionGateWraper( $errno, $errstr, $errfile, $errline )
+    {
+            $errorString = "ERROR was detected automaticly : " . $errno ." ". $errstr ." ". $errfile ." ". $errline . "<br>" ;
+            throw new Exception( $errorString );
+    }
+
+    private static function ExceptionGate($ExceptionObj)
+    {
+        echo "ExceptionGate <br>";
+        echo $ExceptionObj->getMessage();
+    }
+    
+    private static function startAutoload($config)
+    {
        self::$_classMapPaths    = $config['classmapPaths'];
        self::$_aliases          = $config['aliases'];
        self::$_includePaths     = $config['includepaths'];
