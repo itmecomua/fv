@@ -28,7 +28,7 @@ class fvConfig {
 	function Load( $fileName ) 
     {
         if ( file_exists($fileName) ){
-            $this->config  = array_merge( $this->config , $fileName );
+            $this->config  = array_merge( $this->config , require($fileName) );
         }else{
             throw new Exception("Can't load config file '". $fileName . "'. Terminating");  
         } 

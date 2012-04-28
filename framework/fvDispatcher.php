@@ -1,15 +1,4 @@
-<?php
-/*
-*  1) Разбор URL (Request ) (независимо от Application )
-*  2) Создание  "нужного" Application, все компоненты будут получены именно от Application
-*  3) Получение модуля (от Application )
-*  4) Получения Акшина (от Application )
-*  5) Прохождение фильтров  ( Filters ) (от Application )
-*  6) Шаблон ( Layout ) (от Application )
-*  7) Страница  ( Page ) (от Application )
-*  8) Установка ответа  ( Response ) (независимо от Application )
-*  9) Посылка ответа пользователю ( Response ) (независимо от Application )
-*/
+п»ї<?php
 
 class fvDispatcher {
     private $curentAppName;
@@ -38,7 +27,8 @@ class fvDispatcher {
 
     const MAX_REDIRECT = 100;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->_request     = new fvRequest();
         $this->_route       = new fvRoute();
         /*
@@ -49,8 +39,9 @@ class fvDispatcher {
 
     function process() 
     {
-        $this->curentAppName = $this->resolveAppName($this->_request->getRequestUrlparts());
-        $this->_app = new fvApplication($this->curentAppName);
+        $this->curentAppName = $this->resolveAppName( $this->_request->getRequestUrlparts() );
+        $this->_app = new fvApplication( $this->curentAppName );
+        $this->_app->run();
         
         /*
         if (++$this->_redirectCount > self::MAX_REDIRECT){
@@ -66,7 +57,7 @@ class fvDispatcher {
     }
     
 /* 
-* узнаем какой аппликейшн запрашивает пользователеь 
+* ?????? ????? ?????????? ??????????? ????????????? 
 * 
 */
     private function resolveAppName( $requestUrlParts ){                      
@@ -80,14 +71,6 @@ class fvDispatcher {
 
         return $resultApp;
     }
-
-
-
-
-
-    
-    
-
 
     function redirect($url, $delay = 0, $status = 302) {
         $this->_responce = fvResponce::getInstance();

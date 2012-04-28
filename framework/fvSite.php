@@ -1,9 +1,4 @@
 ﻿<?php
-/*
-*  1) Установака автозагрузчика
-*  2) Инициализация различных частей движка
-*  3) Создание диспетчера и передача ему управления
-*/
 class fvSite{
     private static $_classMapPaths  = array();
     private static $_aliases        = array();
@@ -11,37 +6,47 @@ class fvSite{
     private static $_fvConfig;
     private static $_fvDispatcher;    
 	private static $_app;
-	
-/*
-    private static $_Db;
-    private static $_fvSession;
-
-*/
-    public static function start( $config = null ){     
+    
+    public static function start( $config = null )
+    {   
+        if(self::isLocal()){
+            self::localStart($config);
+        }else{
+            self::productionStart($config);
+        }
+    }        
+    
+    private static function isLocal()
+    {
+        $srv = $_SERVER['SERVER_NAME'];
+        return ($srv === "lab3.own" );
+    }
+    
+    private static function localStart( $config )
+    {
+        self::process($config);
+    }
+    
+    private static function productionStart( $config )
+    {
         self::startExceptionGate();
         try
+        {        
+            self::process($config);
+        }
+        catch(Exception $ExceptionObj)
         {
-           $a = 0;
-           //throw new Exception('Не сцепленное Деление на ноль.');
-           $b = 5/$a;
-           
-           
+           self::ExceptionGate($ExceptionObj);
+        }            
+    }
+    
+    private static function process( $config )
+    {
            self::startAutoload($config);
            self::startConfig($config);
-           self::startDb();
-           self::startSession();
-           self::startTemplateEngine();
-
            self::$_fvDispatcher = new fvDispatcher();
-           self::$_fvDispatcher->process();
-
-       }
-       catch(Exception $ExceptionObj)
-       {
-           echo "catch" . "<br>";
-           self::ExceptionGate($ExceptionObj);
-       }
-    }
+           self::$_fvDispatcher->process();        
+    }    
 
     private static function startExceptionGate()
     {
@@ -60,7 +65,7 @@ class fvSite{
         echo "ExceptionGate <br>";
         echo $ExceptionObj->getMessage();
     }
-    
+        
     private static function startAutoload($config)
     {
        self::$_classMapPaths    = $config['classmapPaths'];
@@ -126,21 +131,10 @@ class fvSite{
         return true;
     }
     
-    private static function startConfig($config){
+    private static function startConfig($config)
+    {
        self::$_fvConfig = new fvConfig($config);
     }
-    
-    private static function startDb(){
-       
-    }   
-    
-    private static function startSession(){
-        
-    }
-    
-    private static function startTemplateEngine(){
-        
-    }    
     
     public static function getPathOfAlias($alias)
     {
@@ -168,7 +162,8 @@ class fvSite{
         }
     }    
     
-    public static function getConfig(){
+    public static function getConfig()
+    {
         return self::$_fvConfig;
     }
 	
@@ -177,7 +172,139 @@ class fvSite{
 		if(self::$_app===null || $app===null)
 			self::$_app=$app;
 		else
-			throw new CException(Yii::t('yii','Yii application can only be created once.'));
-	}	
+			throw new FvException(Yii::t('yii','Yii application can only be created once.'));
+	}
+    
+    public static function createComponent($config)
+    {
+        if(is_string($config))
+        {
+            $type=$config;
+            $config=array();
+        }
+        else if(isset($config['class']))
+        {
+            $type=$config['class'];
+            unset($config['class']);
+        }
+        else
+            throw new FvException(Yii::t('yii','Object configuration must be an array containing a "class" element.'));
+
+        if(!class_exists($type,false))
+            $type=Yii::import($type,true);
+
+        if(($n=func_num_args())>1)
+        {
+            $args=func_get_args();
+            if($n===2)
+                $object=new $type($args[1]);
+            else if($n===3)
+                $object=new $type($args[1],$args[2]);
+            else if($n===4)
+                $object=new $type($args[1],$args[2],$args[3]);
+            else
+            {
+                unset($args[0]);
+                $class=new ReflectionClass($type);
+                // Note: ReflectionClass::newInstanceArgs() is available for PHP 5.1.3+
+                // $object=$class->newInstanceArgs($args);
+                $object=call_user_func_array(array($class,'newInstance'),$args);
+            }
+        }
+        else
+            $object=new $type;
+
+        foreach($config as $key=>$value)
+            $object->$key=$value;
+
+        return $object;
+    }    
+
+    public static function import($alias, $forceInclude=false)
+    {
+        if( isset(self::$_imports[$alias]) )
+        {
+            return self::$_imports[$alias];            
+        }  
+
+        if( class_exists($alias, false) || interface_exists($alias, false) )
+        {
+            return self::$_imports[$alias]=$alias;            
+        }
+
+        // a class name in PHP 5.3 namespace format
+        if(($pos=strrpos($alias,'\\'))!==false)
+        {
+            $namespace=str_replace('\\','.',ltrim(substr($alias,0,$pos),'\\'));
+            if(($path=self::getPathOfAlias($namespace))!==false)
+            {
+                $classFile=$path.DIRECTORY_SEPARATOR.substr($alias,$pos+1).'.php';
+                if($forceInclude)
+                {
+                    if(is_file($classFile))
+                        require($classFile);
+                    else
+                        throw new FvException(Yii::t('yii','Alias "{alias}" is invalid. Make sure it points to an existing PHP file.',array('{alias}'=>$alias)));
+                    self::$_imports[$alias]=$alias;
+                }
+                else
+                    self::$classMap[$alias]=$classFile;
+                return $alias;
+            }
+            else
+                throw new FvException(Yii::t('yii','Alias "{alias}" is invalid. Make sure it points to an existing directory.',
+                    array('{alias}'=>$namespace)));
+        }
+
+        if(($pos=strrpos($alias,'.'))===false)  // a simple class name
+        {
+            if($forceInclude && self::autoload($alias))
+                self::$_imports[$alias]=$alias;
+            return $alias;
+        }
+
+        $className=(string)substr($alias,$pos+1);
+        $isClass=$className!=='*';
+
+        if($isClass && (class_exists($className,false) || interface_exists($className,false)))
+            return self::$_imports[$alias]=$className;
+
+        if(($path=self::getPathOfAlias($alias))!==false)
+        {
+            if($isClass)
+            {
+                if($forceInclude)
+                {
+                    if(is_file($path.'.php'))
+                        require($path.'.php');
+                    else
+                        throw new FvException(Yii::t('yii','Alias "{alias}" is invalid. Make sure it points to an existing PHP file.',array('{alias}'=>$alias)));
+                    self::$_imports[$alias]=$className;
+                }
+                else
+                    self::$classMap[$className]=$path.'.php';
+                return $className;
+            }
+            else  // a directory
+            {
+                if(self::$_includePaths===null)
+                {
+                    self::$_includePaths=array_unique(explode(PATH_SEPARATOR,get_include_path()));
+                    if(($pos=array_search('.',self::$_includePaths,true))!==false)
+                        unset(self::$_includePaths[$pos]);
+                }
+
+                array_unshift(self::$_includePaths,$path);
+
+                if(self::$enableIncludePath && set_include_path('.'.PATH_SEPARATOR.implode(PATH_SEPARATOR,self::$_includePaths))===false)
+                    self::$enableIncludePath=false;
+
+                return self::$_imports[$alias]=$path;
+            }
+        }
+        else
+            throw new FvException(Yii::t('yii','Alias "{alias}" is invalid. Make sure it points to an existing directory or file.',
+                array('{alias}'=>$alias)));
+    }    
    
 }
