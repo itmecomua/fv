@@ -1,14 +1,13 @@
 <?php
 return array(
-    'fvConfig'          => FV_ROOT . '/framework/fvConfig.php',    
-    'fvErrorHandler'    => FV_ROOT . '/framework/fvErrorHandler.php',
-    'fvDispatcher'      => FV_ROOT . '/framework/fvDispatcher.php',
-	'fvRequest'      	=> FV_ROOT . '/framework/fvRequest.php',
-    'fvApplication'     => FV_ROOT . '/framework/fvApplication.php',
-    'fvRoute'           => FV_ROOT . '/framework/fvRoute.php',
-    'fvUnit'            => FV_ROOT . '/framework/fvUnit.php',
-    'fvAction'          => FV_ROOT . '/framework/fvAction.php',    
-    'fvModule'          => FV_ROOT . '/framework/fvModule.php',        
+    '_fvConfig'          => FV_ROOT . '/framework/fvConfig.php',    
+    '_fvErrorHandler'    => FV_ROOT . '/framework/fvErrorHandler.php',
+    '_fvDispatcher'      => FV_ROOT . '/framework/fvDispatcher.php',
+	'_fvRequest'      	=> FV_ROOT . '/framework/fvRequest.php',
+    '_fvApplication'     => FV_ROOT . '/framework/fvApplication.php',
+    
+    
+    '_fvRoute'           => FV_ROOT . '/framework/fvRoute.php',
     
         /*
 		'fvMediaLib'      	=> FV_ROOT . '/framework/fvMediaLib.php',
