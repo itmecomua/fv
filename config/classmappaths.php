@@ -7,8 +7,11 @@ return array(
     'fvApplication'     => FV_ROOT . '/framework/fvApplication.php',
     'fvRoute'           => FV_ROOT . '/framework/fvRoute.php',
     'fvUnit'            => FV_ROOT . '/framework/fvUnit.php',
+    'fvSegment'         => FV_ROOT . '/framework/fvSegment.php',
     'fvAction'          => FV_ROOT . '/framework/fvAction.php',    
-    'fvModule'          => FV_ROOT . '/framework/fvModule.php',        
+    'fvModule'          => FV_ROOT . '/framework/fvModule.php',
+
+
     
         /*
 		'fvMediaLib'      	=> FV_ROOT . '/framework/fvMediaLib.php',

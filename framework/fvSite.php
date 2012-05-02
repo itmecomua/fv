@@ -59,7 +59,7 @@ class fvSite
     
     public static function Import( $path, $className=null )
     {
-        if( $className == null)
+        if( $className == null )
         {
             $separator = self::getConfig()->getConfigSeparator();
             $extension = self::getConfig()->getExecuteFileExtension();
@@ -92,8 +92,12 @@ class fvSite
         {
             self::$_instances[$name] = new $name( $params );
             if( self::$_instances[$name] instanceof fvUnit ) 
-            {
-                self::$_instances[$name]->configure( self::getConfig()->getSeting( $name ) );
+            {                
+                if( self::getConfig()->isSeting( $name ) )
+                {
+                    self::$_instances[$name]->configure( self::getConfig()->getSeting( $name ) );    
+                }
+                
             }
             return self::$_instances[$name];
         }

@@ -4,30 +4,52 @@ class fvConfig {
 	private $configSeparator;
     private $executeFileExtension;
 
- 	public function __construct ($config, $configSeparator = ".") {
+ 	public function __construct ($config, $configSeparator = ".") 
+    {
 		$this->config = $config;
         $this->configSeparator = $configSeparator;
         $this->executeFileExtension = ".php";
 	}
 
-
-    public function getSeting($cPath, $default = null)
+    private function get($cPath, $default = null)
     {
-        
-        $path = explode($this->configSeparator, $cPath);
-        $result = $this->config;
+        $path       = explode($this->configSeparator, $cPath);
+        $value      = $this->config;
+        $errorFlag  = false;
+        $errorPoint = "";
+
         foreach ($path as $step) 
         {
-            if (isset($result[$step])) 
+            if (isset($value[$step])) 
             {
-                $result = $result[$step];
+                $value = $value[$step];
             }
             else
             {
-                throw new Exception("Can't read value from config '". $step . "'. Terminating");                  
+                $errorFlag  = true;
+                $errorPoint = $step;
             }
         }
-        return $result; 
+        return array( 'value'=>$value, 'errorFlag'=>$errorFlag, 'errorPoint'=>$errorPoint );
+    }
+    
+    public function getSeting($cPath, $default = null)
+    {
+        $result = $this->get($cPath, $default);
+        if( $result['errorFlag'] )
+        {
+            throw new Exception( 'Can not read value '.$result['errorPoint'].' from config' ); 
+        }
+        else
+        {
+            return $result['value'];    
+        }
+    }
+
+    public function isSeting( $cPath, $default = null )
+    {
+        $result = $this->get($cPath, $default);
+        return !$result['errorFlag'];
     }
        
 	function Load( $fileName ) 

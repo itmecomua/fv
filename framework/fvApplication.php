@@ -113,7 +113,10 @@ class fvApplication extends fvUnit
     
     public function runController( $route )
     {
-        $ca = $this->createController($route);
+        //$ca = $this->createController($route);
+        
+        $tmp = $this->getModule('news');
+        echo $tmp->getBasePath();
 /*
         if( $ca !== null )
         {

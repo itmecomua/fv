@@ -1,5 +1,5 @@
 <?php
-class fvAction extends fvUnit
+class fvAction extends fvSegment
 {
     
 }
