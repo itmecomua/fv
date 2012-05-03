@@ -6,7 +6,11 @@ class fvApplication extends fvUnit
     private $_defaultController;
     
     private $controllerMap;
+    
+    /* список имен модулей которые подключены к Аппликейшену */
     private $_modulesIncluded;
+    
+    /* "дополнительная память" для ускоренного доступа к обьектам модулей */
     private $_modules;
 
         
@@ -69,9 +73,6 @@ class fvApplication extends fvUnit
         return $this->_modulesConfigs;
     }      
 
-/*
-* TODO:
-*/    
     public function getModule( $id )
     {
         if( isset( $this->_modules[$id] ) ) 
@@ -89,7 +90,10 @@ class fvApplication extends fvUnit
             $this->_modules[$id]->setBasePath( $currentAppModulesDir . $currentModuleDir );
             return $this->_modules[$id];
         }
-
+        else
+        {
+            return false;
+        }
     }    
     
 /*
@@ -133,8 +137,66 @@ class fvApplication extends fvUnit
         }
 */        
     }
+
+    public function createController( $route )
+    {
+        // если $route - пустота то тогда $route - контроллер по умолчанию
+        if( ( $route = trim( $route,'/' ) ) === '' ){ $route = $owner->getDefaultModule; }
+        
+        // узнаем указана ли регистровая чувствительность URL ...
+        $caseSensitive = $this->getUrlManager()->getCaseSensetive();
+        
+        // прибавляем слеш в конец $route
+        $route.='/';
+
+        // вырезаем кусок строки от начала строки до позиции в которой обнаружен первый слеш
+        $idModule = substr( $route, 0, $pos );
+
+        // если этот участок содержит ерунду - возвращаем нуль
+        if( !preg_match('/^\w+$/',$idModule) ){ return null; }
+                
+        // если НЕ установленна чувствительность URL к регистру - уменьшаем все буквы в куске
+        if( !$caseSensitive ){ $idModule=strtolower($id); }
+        
+        // вызываем модуль *(если не существует - создастся )
+        if( $currentModule = $this->getModule( $idModule ) )
+        {
+            $basePath = $currentModule->getBasePath();
+        }
+        else
+        {
+            return null;
+        }
+                
+        // вырезаем другой кусок, от первой точки до конца строки
+        $route = (string) substr( $route, $pos+1 );
+                        
+        $this->parseActionParams($route);
+                
+        $className=ucfirst($id).'Controller';
+        
+        $classFile=$basePath.DIRECTORY_SEPARATOR.$className.'.php';
+        if(is_file($classFile))
+        {
+                if(!class_exists($className,false))
+                    require($classFile);
+                if(class_exists($className,false) && is_subclass_of($className,'CController'))
+                {
+                    $id[0]=strtolower($id[0]);
+                    return array(
+                        new $className($controllerID.$id,$owner===$this?null:$owner),
+                        $this->parseActionParams($route),
+                    );
+                }
+                return null;
+        }
+            $controllerID.=$id;
+            $basePath.=DIRECTORY_SEPARATOR.$id;
+    }
+
+
     
-    public function createController( $route, $owner=null )
+    public function _createController( $route, $owner=null )
     {
         // если владельца нет - владелец Application 
         if( $owner === null ){ $owner = $this; }
@@ -180,7 +242,6 @@ class fvApplication extends fvUnit
                 {
                     return $this->createController( $route, $module );
                 }
-                    
 
                 $basePath = $owner->getControllerPath();
                 $controllerID='';
