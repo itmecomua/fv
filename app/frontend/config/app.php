@@ -12,6 +12,12 @@ return array(
 
     /* "Робочий" файл модуля */
     'ModuleWorkFileName'=> 'module',
+
+    /* Модуль по умолчанию  */
+    'DefaultModuleName'=> 'index',
+
+    /* Акшин по умолчанию  */
+    'DefaultActionName'=> 'index',
    
     /* Установка свойств класса urlManager  */
     'urlManager'=>array(

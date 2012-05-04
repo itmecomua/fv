@@ -1,5 +1,14 @@
 <?php
 
+class Some{
+    public $a;
+    public function dry()
+    {
+        echo "DRY";
+    }
+}
+
+
 class NewsAction extends fvAction {
     /*
     function __construct () 
@@ -9,14 +18,9 @@ class NewsAction extends fvAction {
     */
     function executeIndex() 
     {
-        if (!fvRequest::getInstance()->isXmlHttpRequest()) 
-        {
-            return self::$FV_OK;
-        }
-        else 
-        {
-            return self::$FV_AJAX_CALL;
-        }   
+        
+        
+        return array("a"=>100500 , "ao" => new Some() );
     }
     
     function executeLatest() 

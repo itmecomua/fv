@@ -112,15 +112,15 @@ class fvApplication extends fvUnit
     public function processRequest()
     {
         $route = $this->getUrlManager()->parseUrl( $this->getRequest() );
-        $this->runController( $route );
+        //$this->runController( $route );
+        $this->createModule( $route );
     }  
     
     public function runController( $route )
     {
         //$ca = $this->createController($route);
         
-        $tmp = $this->getModule('news');
-        echo $tmp->getBasePath();
+
 /*
         if( $ca !== null )
         {
@@ -138,62 +138,42 @@ class fvApplication extends fvUnit
 */        
     }
 
-    public function createController( $route )
+    
+/*
+*  TODO : 
+* 
+*/    
+    public function createModule( $route )
     {
-        // если $route - пустота то тогда $route - контроллер по умолчанию
-        if( ( $route = trim( $route,'/' ) ) === '' ){ $route = $owner->getDefaultModule; }
-        
-        // узнаем указана ли регистровая чувствительность URL ...
-        $caseSensitive = $this->getUrlManager()->getCaseSensetive();
-        
-        // прибавляем слеш в конец $route
-        $route.='/';
+        $moduleId = $route['module'];
 
-        // вырезаем кусок строки от начала строки до позиции в которой обнаружен первый слеш
-        $idModule = substr( $route, 0, $pos );
+        $actionId = $route['action'];
 
-        // если этот участок содержит ерунду - возвращаем нуль
-        if( !preg_match('/^\w+$/',$idModule) ){ return null; }
-                
-        // если НЕ установленна чувствительность URL к регистру - уменьшаем все буквы в куске
-        if( !$caseSensitive ){ $idModule=strtolower($id); }
+        $module     = $this->getModule( $moduleId );
+        $actionId   = "execute" . ucfirst($actionId);
         
-        // вызываем модуль *(если не существует - создастся )
-        if( $currentModule = $this->getModule( $idModule ) )
-        {
-            $basePath = $currentModule->getBasePath();
-        }
-        else
-        {
-            return null;
-        }
-                
-        // вырезаем другой кусок, от первой точки до конца строки
-        $route = (string) substr( $route, $pos+1 );
-                        
-        $this->parseActionParams($route);
-                
-        $className=ucfirst($id).'Controller';
+        $_data_ = $module->$actionId();
         
-        $classFile=$basePath.DIRECTORY_SEPARATOR.$className.'.php';
-        if(is_file($classFile))
-        {
-                if(!class_exists($className,false))
-                    require($classFile);
-                if(class_exists($className,false) && is_subclass_of($className,'CController'))
-                {
-                    $id[0]=strtolower($id[0]);
-                    return array(
-                        new $className($controllerID.$id,$owner===$this?null:$owner),
-                        $this->parseActionParams($route),
-                    );
-                }
-                return null;
-        }
-            $controllerID.=$id;
-            $basePath.=DIRECTORY_SEPARATOR.$id;
+        // we use special variable names here to avoid conflict when extracting data
+
+        $_viewFile =  $module->getBasePath() . "/views/".$moduleId.".".$route['action'].".tpl";
+        /*
+        ob_start();
+        ob_implicit_flush(false);
+        require($_viewFile);
+        return ob_get_clean();
+        */
+        
+        extract($_data_,EXTR_PREFIX_SAME,'data');
+        
+        ob_start();
+        ob_implicit_flush(false);
+        require($_viewFile);
+        echo ob_get_clean();
+        
+        
     }
-
+    
 
     
     public function _createController( $route, $owner=null )
