@@ -25,19 +25,12 @@ class NewsAction extends fvAction {
     
     function executeLatest() 
     {
-        if (!fvRequest::getInstance()->isXmlHttpRequest()) 
-        {
-            return self::$FV_OK;
-        }
-        else 
-        {
-            return self::$FV_AJAX_CALL;
-        }   
+        return array( "ex" => "WORK SASHA - work" );
     }
     
     function executeView() 
     {
-        if (!fvRequest::getInstance()->isXmlHttpRequest()) 
+        if (!fvRequest::getSingleton()->isXmlHttpRequest()) 
         {
             return self::$FV_OK;
         }
@@ -48,7 +41,7 @@ class NewsAction extends fvAction {
     }
     function executeSubscribe() 
     {
-        if (!fvRequest::getInstance()->isXmlHttpRequest()) 
+        if (!fvRequest::getSingleton()->isXmlHttpRequest()) 
         {
             return self::$FV_OK;
         }
@@ -64,16 +57,16 @@ class NewsAction extends fvAction {
         if( !$request->isXmlHttpRequest() ) return $this->redirect404();
         try {
             $email = $request->getRequestParameter('email', 'string');
-            $iSubscribe = SubscribeManager::getInstance()->cloneRootInstance();
+            $iSubscribe = SubscribeManager::getSingleton()->cloneRootInstance();
             $m['email'] = $email;
             $m['is_active'] = 1;
             $iSubscribe->updateFromRequest($m);
             if( !$iSubscribe->isValid() )
-                throw new EUserMessageError(fvLang::getInstance()->error_to_send, $iSubscribe, "sub_" );
+                throw new EUserMessageError(fvLang::getSingleton()->error_to_send, $iSubscribe, "sub_" );
             
             if( !$iSubscribe->save() )
-                throw new EUserMessageError(fvLang::getInstance()->error_to_send, $iSubscribe, "sub_" );    
-             $this->setHeader('message', json_encode(fvLang::getInstance()->succesfully_sended) );
+                throw new EUserMessageError(fvLang::getSingleton()->error_to_send, $iSubscribe, "sub_" );    
+             $this->setHeader('message', json_encode(fvLang::getSingleton()->succesfully_sended) );
         } catch (EUserMessageError $exc ) {
             $this->setHeader('exception', json_encode($exc->getMessage()));
             $this->setHeader('validation', json_encode($exc->getValidationResult()));

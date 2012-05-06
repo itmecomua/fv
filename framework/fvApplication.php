@@ -3,9 +3,16 @@ class fvApplication extends fvUnit
 {  
     private $_request;
     private $_urlManager;
-    private $_defaultController;
+    private $_db;
     
+    
+    
+    
+    
+    private $_defaultController;   
     private $controllerMap;
+    
+    
     
     /* список имен модулей которые подключены к Аппликейшену */
     private $_modulesIncluded;
@@ -20,12 +27,13 @@ class fvApplication extends fvUnit
         fvSite::getConfig()->Load( fvSite::getConfig()->getPathByAlias('currentApp.config') . "app.php" );
         $this->setUrlManager();
         $this->setRequest();
+        $this->setDb();
     }
 
     private function setUrlManager()
     {
         fvSite::Import( 'currentApp.classes.urlManager' );
-        $this->_urlManager = fvSite::getInstance('urlManager');
+        $this->_urlManager = fvSite::getSingleton('urlManager');
     }
     
     private function getUrlManager()
@@ -35,23 +43,24 @@ class fvApplication extends fvUnit
     
     private function setRequest()
     {
-        $this->_request = fvSite::getInstance('fvRequest');
+        $this->_request = fvSite::getSingleton('fvRequest');
     }
     
     private function getRequest()
     {
         return $this->_request;
     }
-       
-    public function setDefaultController( $name )
-    {
-        $this->_defaultController = $name;
-    }  
 
-    public function getDefaultController()
+    private function setDb()
     {
-        return $this->_defaultController;
-    }  
+        $this->_db = fvSite::getSingleton('fvDb');
+    }
+    
+    private function getDb()
+    {
+        return $this->_db;
+    }
+
     
     public function setModulesIncluded( array $modulesIncluded )
     {
@@ -73,6 +82,11 @@ class fvApplication extends fvUnit
         return $this->_modulesConfigs;
     }      
 
+    public function getAllModules()
+    {
+        return $this->_modules;
+    }      
+    
     public function getModule( $id )
     {
         if( isset( $this->_modules[$id] ) ) 
@@ -86,7 +100,7 @@ class fvApplication extends fvUnit
             $currentModuleFileName  = fvSite::getConfig()->getSeting('ModuleMainFileName').fvSite::getConfig()->getExecuteFileExtension();
             $currentModuleClassName = ucfirst( $id ).ucfirst( fvSite::getConfig()->getSeting( 'ModuleMainFileName' ) );
             fvSite::Import( $currentAppModulesDir . $currentModuleDir . DIRECTORY_SEPARATOR . $currentModuleFileName , $currentModuleClassName );
-            $this->_modules[$id] = fvSite::getInstance( $currentModuleClassName );
+            $this->_modules[$id] = fvSite::getSingleton( $currentModuleClassName );
             $this->_modules[$id]->setBasePath( $currentAppModulesDir . $currentModuleDir );
             return $this->_modules[$id];
         }
@@ -96,14 +110,6 @@ class fvApplication extends fvUnit
         }
     }    
     
-/*
-* TODO:
-*/
-    public function getControllerPath()
-    {
-        echo "XXX";
-        return FV_ROOT;
-    }
     public function run()
     {
         $this->processRequest();
@@ -112,146 +118,18 @@ class fvApplication extends fvUnit
     public function processRequest()
     {
         $route = $this->getUrlManager()->parseUrl( $this->getRequest() );
-        //$this->runController( $route );
         $this->createModule( $route );
     }  
     
-    public function runController( $route )
-    {
-        //$ca = $this->createController($route);
-        
-
-/*
-        if( $ca !== null )
-        {
-            list($controller,$actionID)=$ca;
-            $oldController=$this->_controller;
-            $this->_controller=$controller;
-            $controller->init();
-            $controller->run($actionID);
-            $this->_controller=$oldController;
-        }
-        else
-        {
-            throw new Exception( 'Unable to resolve the request ' . $route , 404 );
-        }
-*/        
-    }
-
-    
-/*
-*  TODO : 
-* 
-*/    
     public function createModule( $route )
     {
-        $moduleId = $route['module'];
-
-        $actionId = $route['action'];
-
+        $moduleId   = $route['module'];
+        $actionId   = $route['action'];
         $module     = $this->getModule( $moduleId );
-        $actionId   = "execute" . ucfirst($actionId);
-        
-        $_data_ = $module->$actionId();
-        
-        // we use special variable names here to avoid conflict when extracting data
-
-        $_viewFile =  $module->getBasePath() . "/views/".$moduleId.".".$route['action'].".tpl";
-        /*
-        ob_start();
-        ob_implicit_flush(false);
-        require($_viewFile);
-        return ob_get_clean();
-        */
-        
-        extract($_data_,EXTR_PREFIX_SAME,'data');
-        
-        ob_start();
-        ob_implicit_flush(false);
-        require($_viewFile);
-        echo ob_get_clean();
-        
-        
+        $actionName = "execute" . ucfirst( $actionId );
+        $showName   = "show" . ucfirst( $actionId );
+        $module->setCurrentActionName( $actionName );     
+        $module->setCurrentShowName( $showName );     
     }
-    
-
-    
-    public function _createController( $route, $owner=null )
-    {
-        // если владельца нет - владелец Application 
-        if( $owner === null ){ $owner = $this; }
-        
-        // если $route - пустота то тогда $route - контроллер по умолчанию
-        if( ( $route = trim( $route,'/' ) ) === '' ){ $route = $owner->getDefaultController; }
-        
-        // узнаем указана ли регистровая чувствительность URL ...
-        $caseSensitive = $this->getUrlManager()->getCaseSensetive();
-        
-        // прибавляем слеш в конец $route
-        $route.='/';
-
-        // пока $route содержит в себе '/'...
-        while( ( $pos = strpos( $route, '/') ) !== false )
-        {
-            // вырезаем кусок строки от начала строки до позиции в которой обнаружен первый слеш
-            $id = substr( $route, 0, $pos );
-
-            // если этот участок содержит ерунду - возвращаем нуль
-            if(!preg_match('/^\w+$/',$id)){ return null; }
-                
-            // если НЕ установленна чувствительность URL к регистру - уменьшаем все буквы в куске
-            if(!$caseSensitive){ $id=strtolower($id); }
-                
-            // вырезаем другой кусок, от первой точки до конца строки
-            $route = (string) substr( $route, $pos+1 );
-                        
-            // если не установленна переменная $basePath
-            if(!isset($basePath))  // first segment
-            {
-                // если в реестре владельца существует запись с настоящим  $id
-                if( isset( $owner->controllerMap[$id] ) )
-                {
-                    return array(
-                        Yii::createComponent($owner->controllerMap[$id],$id,$owner===$this?null:$owner),
-                        $this->parseActionParams($route),
-                    );
-                }
-                
-                // Если существует модуль с таким названием то рекурсивно вызваем этот же метод только уже с параметром $module
-                if( ( $module = $owner->getModule($id) ) !==null )
-                {
-                    return $this->createController( $route, $module );
-                }
-
-                $basePath = $owner->getControllerPath();
-                $controllerID='';
-                
-            }
-            else
-            {
-                $controllerID.='/';
-            }
-                
-            $className=ucfirst($id).'Controller';
-            $classFile=$basePath.DIRECTORY_SEPARATOR.$className.'.php';
-            if(is_file($classFile))
-            {
-                if(!class_exists($className,false))
-                    require($classFile);
-                if(class_exists($className,false) && is_subclass_of($className,'CController'))
-                {
-                    $id[0]=strtolower($id[0]);
-                    return array(
-                        new $className($controllerID.$id,$owner===$this?null:$owner),
-                        $this->parseActionParams($route),
-                    );
-                }
-                return null;
-            }
-            $controllerID.=$id;
-            $basePath.=DIRECTORY_SEPARATOR.$id;
-        }
-    }
-    
     
 }

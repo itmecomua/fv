@@ -8,10 +8,10 @@ return array(
     'aliasMapPaths'=> require_once('aliasMapPaths.php'),
     
     /* "Главный" файл модуля */
-    'ModuleMainFileName'=> 'action',
+    'ModuleMainFileName'=> 'module',
 
     /* "Робочий" файл модуля */
-    'ModuleWorkFileName'=> 'module',
+    'ModuleWorkFileName'=> 'action',
 
     /* Модуль по умолчанию  */
     'DefaultModuleName'=> 'index',
@@ -28,12 +28,14 @@ return array(
     'fvApplication'=>array(
         /* Подключение модулей в Аппликейшн  */
         'ModulesIncluded' =>  array(
-            'news'  => 'NewsModule',
+            'index'     => 'IndexModule',
+            'news'      => 'NewsModule',
         ),
 
     ),
     
     /* установки для модулей  */
     'modulesConfigs' => require_once('modulesConfigs.php'),
+       
 
 );

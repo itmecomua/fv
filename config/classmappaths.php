@@ -10,6 +10,7 @@ return array(
     'fvSegment'         => FV_ROOT . '/framework/fvSegment.php',
     'fvAction'          => FV_ROOT . '/framework/fvAction.php',    
     'fvModule'          => FV_ROOT . '/framework/fvModule.php',
+    'fvDb'              => FV_ROOT . '/framework/fvDb.php',
 
 
     

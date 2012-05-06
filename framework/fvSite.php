@@ -10,7 +10,7 @@ class fvSite
 	{
 		self::startAutoloader( $config );
         self::startErrorHandler();
-        self::setConfig($config);
+        self::setConfig( $config );
         self::setDispatcher();
         
         self::$_dispatcher->run();
@@ -19,7 +19,7 @@ class fvSite
     private static function startAutoloader( $config )
     {
         self::$_classMapPaths = $config['classMapPaths'];
-        spl_autoload_register( array('fvSite','autoload') );
+        spl_autoload_register( array( 'fvSite', 'autoload' ) );
     }
     
     public static function autoload( $className )
@@ -33,13 +33,13 @@ class fvSite
     private static function startErrorHandler()
     {
         error_reporting(E_ALL);
-        set_exception_handler('fvErrorHandler::ExceptionHandler' );
-        set_error_handler('fvErrorHandler::ErrorHandler' , E_ALL );
+        set_exception_handler( 'fvErrorHandler::ExceptionHandler' );
+        set_error_handler( 'fvErrorHandler::ErrorHandler' , E_ALL );
     }
 
     private static function setConfig( $config )
     {
-        self::$_config = self::getInstance('fvConfig' , $config );
+        self::$_config = self::getSingleton( 'fvConfig' , $config );
     }
     
     public static function getConfig()
@@ -49,7 +49,7 @@ class fvSite
     
     private static function setDispatcher()
     {
-        self::$_dispatcher = self::getInstance('fvDispatcher');
+        self::$_dispatcher = self::getSingleton('fvDispatcher');
     }
     
     public static function getDispatcher()
@@ -82,7 +82,7 @@ class fvSite
         }
     }
 
-    public static function getInstance( $name , $params=null )
+    public static function getSingleton( $name , $params=null )
     {
         if(isset(self::$_instances[$name]))
         {

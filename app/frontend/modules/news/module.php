@@ -17,7 +17,7 @@
         */
         function showIndex() 
         {
-            $iPager = new fvPager( NewsManager::getInstance() );
+            $iPager = new fvPager( NewsManager::getSingleton() );
             
             $this->__assign("cNews",$iPager->paginate( "is_active = 1", "weight asc" ));     
 
@@ -33,14 +33,14 @@
         {
             $permissionShow = 4;
             $packId = $this->getRequest()->getRequestParameter('packId', 'int', 0);
-            $count = NewsManager::getInstance()->getCount("is_promo = 1");
+            $count = NewsManager::getSingleton()->getCount("is_promo = 1");
             
             $maxPack = ceil($count / $permissionShow);
             if($packId+1 > $maxPack)
                 $packId = 0;
             
             $limit = $packId * $permissionShow;
-            $this->cNews = NewsManager::getInstance()->getAll( "is_promo = 1", "weight asc", "{$limit}, $permissionShow" );
+            $this->cNews = NewsManager::getSingleton()->getAll( "is_promo = 1", "weight asc", "{$limit}, $permissionShow" );
             
             $this->__assign("packId", $packId);
             $this->__assign("isAjax", $this->getRequest()->isXmlHttpRequest());
@@ -57,9 +57,9 @@
             /**
             * @var News
             */
-            $iNews = NewsManager::getInstance()->getByUrl();
+            $iNews = NewsManager::getSingleton()->getByUrl();
                                        
-            if(NewsManager::getInstance()->isRootInstance($iNews)) {                                
+            if(NewsManager::getSingleton()->isRootInstance($iNews)) {                                
 
                 if ($iNews->hasMeta())
                     $this->current_page->setMeta($iNews->getMeta());
