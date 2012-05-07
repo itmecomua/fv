@@ -61,17 +61,18 @@ class fvDispatcher
     
     private function process()
     {
-        $module = $this->getApp()->getAllModules();
-        fvSite::Debug ( $module );
-        
-        
-        
+        $modules = $this->getApp()->getAllModules();
+        foreach( $modules as $module )
+        {
+            $this->invokeView( $module );
+        }
     }
     
-    private function invokeView()
+    private function invokeView( $module )
     {
-        $_viewFile =  $module->getBasePath() . "/views/".$moduleId.".".$route['action'].".tpl";
-        $_data_ = $module->$actionId();
+        $_viewFile =  $module->getBasePath() . "/views/".$module->getModuleId().".".$module->getActionId().".tpl";
+        $actionMethod = $module->getShowName();
+        $_data_ = $module->$actionMethod();
         extract($_data_, EXTR_PREFIX_SAME,'data');
         ob_start();
         ob_implicit_flush(false);

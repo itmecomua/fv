@@ -56,7 +56,7 @@ class fvApplication extends fvUnit
         $this->_db = fvSite::getSingleton('fvDb');
     }
     
-    private function getDb()
+    public function getDb()
     {
         return $this->_db;
     }
@@ -128,8 +128,12 @@ class fvApplication extends fvUnit
         $module     = $this->getModule( $moduleId );
         $actionName = "execute" . ucfirst( $actionId );
         $showName   = "show" . ucfirst( $actionId );
-        $module->setCurrentActionName( $actionName );     
-        $module->setCurrentShowName( $showName );     
+        
+        $module->setModuleId( $moduleId );
+        $module->setActionId( $actionId );     
+        $module->setActionName( $actionName );     
+        $module->setShowName( $showName );
+
     }
     
 }

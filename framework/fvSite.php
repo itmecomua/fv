@@ -95,7 +95,8 @@ class fvSite
             {                
                 if( self::getConfig()->isSeting( $name ) )
                 {
-                    self::$_instances[$name]->configure( self::getConfig()->getSeting( $name ) );    
+                    self::$_instances[$name]->configure( self::getConfig()->getSeting( $name ) );
+                    self::$_instances[$name]->init();
                 }
                 
             }

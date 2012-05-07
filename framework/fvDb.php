@@ -16,9 +16,7 @@ class fvDb extends fvUnit
     private $_connectionOptions;
     private $_entityManager;
 
-    
-    
-    public function __construct()
+    public function init()
     {
         Doctrine\ORM\Tools\Setup::registerAutoloadDirectory( $this->getLib() );
         if ($this->getMode() == "development") 
@@ -32,7 +30,8 @@ class fvDb extends fvUnit
         
         $this->setConfiguration( new Configuration() );
         $this->getConfiguration()->setMetadataCacheImpl( $this->getCache() );
-        $this->getConfiguration()->setDriverImpl( $this->getConfiguration()->newDefaultAnnotationDriver( $this->getEntityDir() ) );
+        $this->setDriverImpl( $this->getConfiguration()->newDefaultAnnotationDriver( $this->getEntityDir() ) );
+        
         $this->getConfiguration()->setMetadataDriverImpl( $this->getDriverImpl() );
         $this->getConfiguration()->setQueryCacheImpl( $this->getCache() );
         $this->getConfiguration()->setProxyDir( $this->getProxyDir() );
@@ -47,7 +46,7 @@ class fvDb extends fvUnit
             $this->getConfiguration()->setAutoGenerateProxyClasses( false );
         }
         
-        $this->setEntityManager( new EntityManager( $this->getConnectionOptions(), $this->getConfiguration() ) );
+        $this->setEntityManager( EntityManager::create( $this->getConnectionOptions(), $this->getConfiguration() ) );
         
     }
     

@@ -19,4 +19,10 @@ class fvUnit
         }
     }
     
+    public function init()
+    {
+
+    }
+    
+    
 }
