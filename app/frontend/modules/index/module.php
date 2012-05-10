@@ -10,11 +10,8 @@
         */
         function showIndex() 
         {
-            fvSite::Import( fvSite::getConfig()->getPathByAlias("entities")."/Post.php", "Post" ) ;
+            fvSite::Import( "entities.Post");
             $post = fvSite::getSingleton('Post');
-            
-            $entityManager = fvSite::getDispatcher()->getApp()->getDb()->getEntityManager();
-
             
             $postEntity = $entityManager->find( 'post' , 1 );
             $mes = $postEntity->getTitle();
